@@ -5,7 +5,7 @@ import com.minivision.common.framework.validation.util.ValidateUtil;
 import com.minivision.common.framework.web.ControllerResps;
 import com.minivision.common.framework.web.util.JsonUtil;
 import com.minivision.sms.agw.gateway.service.device.DeviceService;
-import com.minivison.sms.api.domain.dto.device.req.DeviceReqDTO;
+import com.minivision.sms.api.domain.dto.device.req.DeviceReqDTO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;

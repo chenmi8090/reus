@@ -1,8 +1,8 @@
 package com.minivision.sms.main.domain.service.device;
 
 import com.minivision.common.framework.facade.exception.BusinessException;
-import com.minivison.sms.api.domain.dto.device.req.DeviceReqDTO;
-import com.minivison.sms.api.domain.dto.device.resp.DeviceRespDTO;
+import com.minivision.sms.api.domain.dto.device.req.DeviceReqDTO;
+import com.minivision.sms.api.domain.dto.device.resp.DeviceRespDTO;
 
 import java.util.List;
 

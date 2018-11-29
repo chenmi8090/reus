@@ -1,8 +1,8 @@
 package com.minivision.sms.api.domain.facade.device;
 
 import com.minivision.common.framework.facade.FacadeResp;
-import com.minivison.sms.api.domain.dto.device.req.DeviceReqDTO;
-import com.minivison.sms.api.domain.dto.device.resp.DeviceRespDTO;
+import com.minivision.sms.api.domain.dto.device.req.DeviceReqDTO;
+import com.minivision.sms.api.domain.dto.device.resp.DeviceRespDTO;
 
 import java.util.List;
 

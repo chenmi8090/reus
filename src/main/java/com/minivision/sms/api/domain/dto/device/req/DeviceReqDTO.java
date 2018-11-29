@@ -1,4 +1,4 @@
-package com.minivison.sms.api.domain.dto.device.resp;
+package com.minivision.sms.api.domain.dto.device.req;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +13,7 @@ import java.io.Serializable;
  * @taskId <br>
  * @CreateDate 2018年11月24日 <br>
  */
-@Getter
 @Setter
-public class DeviceRespDTO implements Serializable {
+@Getter
+public class DeviceReqDTO implements Serializable {
 }
