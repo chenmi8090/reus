@@ -16,7 +16,7 @@ import lombok.Setter;
 public class ClassDTO {
     private String name;
 
-    private String pack;
+    private String packageName;
 
     private String path;
 
