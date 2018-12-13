@@ -1,7 +1,7 @@
 
 <p align="center">
   <a href="http://172.16.6.53:5050/srs/reus">
-   <img alt="Reus" src="http://172.16.6.53:5050/srs/reus/raw/d9cf9802f0fa86efee69d0a847ff840024f5a489/reus.jpg">
+   <img alt="Reus" src="https://gitee.com/justinjiang/reus-java/raw/master/reus.jpg">
   </a>
 </p>
 
