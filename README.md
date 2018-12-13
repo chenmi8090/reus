@@ -1,6 +1,7 @@
+
 <p align="center">
   <a href="http://172.16.6.53:5050/srs/reus">
-   <img alt="Mybatis-Plus-Logo" src="http://172.16.6.53:5050/srs/reus/blob/master/reus.png">
+   <img alt="Reus" src="http://172.16.6.53:5050/srs/reus/raw/ea3241015a0bbb8822f3ae7eb55260bb21c4a39d/reus.png">
   </a>
 </p>
 
@@ -11,12 +12,6 @@
 </p>
 
 <p align="center">
-  <!--
-  <a href="http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.baomidou%22%20AND%20a%3A%22mybatis-plus%22">
-    <img alt="maven" src="https://img.shields.io/maven-central/v/com.baomidou/mybatis-plus.svg?style=flat-square">
-  </a>
-  -->
-
   <a href="https://www.apache.org/licenses/LICENSE-2.0">
     <img alt="code style" src="https://img.shields.io/badge/license-Apache%202-4EB1BA.svg?style=flat-square">
   </a>
