@@ -1,5 +1,10 @@
 package com.minivision.reus.common.service.database;
 
+import com.minivision.reus.common.dto.database.DatabaseDTO;
+import com.minivision.reus.common.dto.resp.ServiceResp;
+
+import java.util.List;
+
 /**
  * <Description> <br>
  *
@@ -9,4 +14,5 @@ package com.minivision.reus.common.service.database;
  * @CreateDate 2018年11月30日 <br>
  */
 public interface DatabaseService {
+    ServiceResp<List<String>> connect(DatabaseDTO request);
 }
