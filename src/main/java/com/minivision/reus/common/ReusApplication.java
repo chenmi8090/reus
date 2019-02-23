@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * <Description> 后台启动类<br>
@@ -27,7 +26,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 //@MapperScan("com.minivision")
 @ComponentScan(basePackages = "com.minivision",
-        excludeFilters = { @ComponentScan.Filter(type = FilterType.CUSTOM, value = { ComponentPackageFilter.class })
+        excludeFilters = { @ComponentScan.Filter(type = FilterType.CUSTOM, value = { PackageExcludeFilter.class })
 })
 @EnableTransactionManagement
 @EnableAsync
@@ -76,14 +75,11 @@ public class ReusApplication {
      * @taskId <br>
      */
     private static void close(ConfigurableApplicationContext confApp) {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                if (confApp != null) {
-                    confApp.close();
-                }
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            if (confApp != null) {
+                confApp.close();
             }
-        });
+        }));
     }
 
     /**

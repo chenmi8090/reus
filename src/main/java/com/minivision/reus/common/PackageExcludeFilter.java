@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
  * @version 1.0<br>
  * @CreateDate 2019年01月15日 <br>
  */
-public class ComponentPackageFilter extends RegexPatternTypeFilter
+public class PackageExcludeFilter extends RegexPatternTypeFilter
 {
-    public ComponentPackageFilter() {
+    public PackageExcludeFilter() {
         super(Pattern.compile("com.minivision.sms.*"));
     }
 }
