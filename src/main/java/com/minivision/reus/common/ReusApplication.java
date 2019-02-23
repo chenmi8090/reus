@@ -14,6 +14,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 /**
  * <Description> 后台启动类<br>
@@ -36,7 +39,7 @@ public class ReusApplication {
     /**
      * result <br>
      */
-    private static String result = "hello, welcome to sms, i still alive!!!";
+    private static String result = "hello, welcome to reus, i still alive!!!";
 
     /**
      * Description: 启动springboot<br>
@@ -92,5 +95,24 @@ public class ReusApplication {
     @RequestMapping(value = "/welcome", method = RequestMethod.GET)
     public String welcomeGateway() {
         return result;
+    }
+
+    /**
+     * Description: 支持跨域<br>
+     *
+     * @author jiangzhenya<br>
+     * @taskId <br>
+     * @return <br>
+     */
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*");
+        corsConfiguration.addAllowedHeader("*");
+        corsConfiguration.addAllowedMethod("*");
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfiguration);
+        return new CorsFilter(source);
     }
 }

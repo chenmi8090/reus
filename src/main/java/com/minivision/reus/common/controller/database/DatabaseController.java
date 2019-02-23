@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @CreateDate 2018年11月29日 <br>
  */
 @RestController
+@RequestMapping("database/")
 public class DatabaseController {
 
     @Autowired
