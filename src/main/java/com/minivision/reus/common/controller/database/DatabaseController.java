@@ -1,5 +1,7 @@
 package com.minivision.reus.common.controller.database;
 
+import com.minivision.common.framework.validation.util.ValidateUtil;
+import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import com.minivision.reus.common.service.database.DatabaseService;
 import com.minivision.reus.common.util.JsonUtil;
@@ -34,6 +36,12 @@ public class DatabaseController {
     @RequestMapping(value = "/connect", method = RequestMethod.POST)
     @ApiOperation(notes = "数据库连接", value = "数据库连接", produces = "application/json")
     public String connect(@RequestBody DatabaseDTO request) {
+        try {
+            ValidateUtil.validate(request);
+        } catch (Exception e) {
+            return JsonUtil.getErrorJson(ReusConstants.PARAM_EXCEPTION);
+        }
+
         return JsonUtil.getSucc4data(databaseService.connect(request).getData());
     }
 }

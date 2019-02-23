@@ -1,8 +1,10 @@
 package com.minivision.reus.common.dto.database;
 
+import com.minivision.common.framework.validation.annotation.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -17,18 +19,25 @@ import java.io.Serializable;
 @Getter
 public class DatabaseDTO implements Serializable {
     //0:MySQL, 1:MySQL_v8 ,2:Oracle, 3:IBM DB2, 4:PostgreSQL, 5:SQL_Server, 6:Sqllite
+    @NotEmpty
     private String dbType;
 
+    @NotEmpty
     private String host;
 
+    @NotNull
     private Integer port;
 
+    @NotEmpty
     private String user;
 
+    @NotEmpty
     private String pwd;
 
+    @NotEmpty
     private String database;
 
+    @NotEmpty
     private String encoding;
 
 
