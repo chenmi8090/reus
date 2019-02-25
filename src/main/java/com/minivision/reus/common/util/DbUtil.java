@@ -1,17 +1,12 @@
 package com.minivision.reus.common.util;
 
-import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.database.DatabaseConfig;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import com.minivision.reus.common.dto.database.DbType;
 
 import com.minivision.reus.common.exception.DbDriverLoadingException;
-import com.minivision.reus.common.exception.ReusException;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.mybatis.generator.internal.util.ClassloaderUtility;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.*;
@@ -27,7 +22,7 @@ public class DbUtil {
     private static Map<DbType, Driver> drivers = new HashMap<>();
 
     public static Connection getConnection(DatabaseDTO config) throws ClassNotFoundException, SQLException {
-        DbType dbType = DbType.valueOf(config.getDbType());
+        DbType dbType = DbType.valueOf(config.getDatabaseType());
         if (drivers.get(dbType) == null) {
             loadDbDriver(dbType);
         }
@@ -35,8 +30,8 @@ public class DbUtil {
         String url = getConnectionUrlWithSchema(config);
         Properties props = new Properties();
 
-        props.setProperty("user", config.getUser()); //$NON-NLS-1$
-        props.setProperty("password", config.getPwd()); //$NON-NLS-1$
+        props.setProperty("user", config.getUserName()); //$NON-NLS-1$
+        props.setProperty("password", config.getPassword()); //$NON-NLS-1$
         DriverManager.setLoginTimeout(DB_CONNECTION_TIMEOUTS_SECONDS);
         Connection connection = drivers.get(dbType).connect(url, props);
         log.info("getConnection, connection url: {}", connection);
@@ -71,15 +66,15 @@ public class DbUtil {
             List<String> tables = new ArrayList<>();
             DatabaseMetaData md = connection.getMetaData();
             ResultSet rs;
-            if (DbType.valueOf(config.getDbType()) == DbType.SQL_Server) {
+            if (DbType.valueOf(config.getDatabaseType()) == DbType.SQL_Server) {
                 String sql = "select name from sysobjects  where xtype='u' or xtype='v' ";
                 rs = connection.createStatement().executeQuery(sql);
                 while (rs.next()) {
                     tables.add(rs.getString("name"));
                 }
-            } else if (DbType.valueOf(config.getDbType()) == DbType.Oracle) {
-                rs = md.getTables(null, config.getUser().toUpperCase(), null, new String[] { "TABLE", "VIEW" });
-            } else if (DbType.valueOf(config.getDbType()) == DbType.Sqlite) {
+            } else if (DbType.valueOf(config.getDatabaseType()) == DbType.Oracle) {
+                rs = md.getTables(null, config.getUserName().toUpperCase(), null, new String[] { "TABLE", "VIEW" });
+            } else if (DbType.valueOf(config.getDatabaseType()) == DbType.Sqlite) {
                 String sql = "Select name from sqlite_master;";
                 rs = connection.createStatement().executeQuery(sql);
                 while (rs.next()) {
@@ -169,9 +164,9 @@ public class DbUtil {
     }
 
     public static String getConnectionUrlWithSchema(DatabaseDTO dbConfig) throws ClassNotFoundException {
-        DbType dbType = DbType.valueOf(dbConfig.getDbType());
+        DbType dbType = DbType.valueOf(dbConfig.getDatabaseType());
         String connectionUrl = String
-                .format(dbType.getConnectionUrlPattern(), dbConfig.getHost(), dbConfig.getPort(), dbConfig.getDatabase(), dbConfig.getEncoding());
+                .format(dbType.getConnectionUrlPattern(), dbConfig.getHostName(), dbConfig.getPort(), dbConfig.getDatabase(), dbConfig.getEncoding());
         log.info("getConnectionUrlWithSchema, connection url: {}", connectionUrl);
         return connectionUrl;
     }

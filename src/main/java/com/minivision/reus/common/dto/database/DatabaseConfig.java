@@ -120,7 +120,7 @@ public class DatabaseConfig {
 
 	@Override
 	public String toString() {
-		return "DatabaseConfig{" + "dbType='" + dbType + '\'' + ", name='" + name + '\'' + ", host='" + host + '\'' +
+		return "DatabaseConfig{" + "databaseType='" + dbType + '\'' + ", name='" + name + '\'' + ", hostName='" + host + '\'' +
 				", port='" + port + '\'' + ", schema='" + schema + '\'' + ", username='" + username + '\'' + ", " +
 				"password='" + password + '\'' + ", encoding='" + encoding + '\'' + '}';
 	}

@@ -20,19 +20,19 @@ import java.io.Serializable;
 public class DatabaseDTO implements Serializable {
     //0:MySQL, 1:MySQL_v8 ,2:Oracle, 3:IBM DB2, 4:PostgreSQL, 5:SQL_Server, 6:Sqllite
     @NotEmpty
-    private String dbType;
+    private String databaseType;
 
     @NotEmpty
-    private String host;
+    private String hostName;
 
     @NotNull
     private Integer port;
 
     @NotEmpty
-    private String user;
+    private String userName;
 
     @NotEmpty
-    private String pwd;
+    private String password;
 
     @NotEmpty
     private String database;
