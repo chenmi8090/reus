@@ -27,12 +27,6 @@ public class DatabaseController {
     @Autowired
     private DatabaseService databaseService;
 
-    @RequestMapping(value = "/link", method = RequestMethod.POST)
-    @ApiOperation(notes = "测试连接", value = "测试连接", produces = "application/json")
-    public String link(@RequestBody DatabaseDTO request) {
-        return "";
-    }
-
     @RequestMapping(value = "/connect", method = RequestMethod.POST)
     @ApiOperation(notes = "数据库连接", value = "数据库连接", produces = "application/json")
     public String connect(@RequestBody DatabaseDTO request) {
