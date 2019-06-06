@@ -19,18 +19,22 @@ import java.io.Serializable;
 @Getter
 public class CodeDTO implements Serializable {
 
-    @NotEmpty
-    private String tableName;
-    @NotEmpty
-    private String encoding;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5868157075370413384L;
+	@NotEmpty
+	private String tableName;
+	@NotEmpty
+	private String encoding;
 
-    private ClassDTO controller;
+	private ClassDTO controller;
 
-    private ClassDTO service;
+	private ClassDTO service;
 
-    private ClassDTO dto;
+	private ClassDTO dto;
 
-    private ClassDTO entity;
+	private ClassDTO entity;
 
-    private ClassDTO mapper;
+	private ClassDTO mapper;
 }
