@@ -66,6 +66,7 @@ public class DbUtil {
             List<String> tables = new ArrayList<>();
             DatabaseMetaData md = connection.getMetaData();
             ResultSet rs;
+            log.info("[DbUtil] the DbType Sql_Server is {}", DbType.SQL_Server);
             if (DbType.valueOf(config.getDatabaseType()) == DbType.SQL_Server) {
                 String sql = "select name from sysobjects  where xtype='u' or xtype='v' ";
                 rs = connection.createStatement().executeQuery(sql);

@@ -68,6 +68,11 @@ public class ReusParams {
     public static final Integer TEN = 10;
 
     /**
+     * DTO类型包名
+     */
+    public static final String PACKAGE_DTO_NAME = "com.minivision.sms.main.domain.dto.";
+
+    /**
      * Mapper类型包名
      */
     public static final String PACKAGE_MAPPER_NAME = "com.minivision.sms.main.domain.mapper.";

@@ -3,7 +3,7 @@
  **************************************************************************/
 package com.minivision.reus.common.service.other;
 
-import com.minivision.reus.common.dto.req.GetPackageAndClass;
+import com.minivision.reus.common.dto.resp.ClassAndPackageResp;
 
 /**
  * <Description>: 获取包名和类名Service<br>
@@ -20,6 +20,6 @@ public interface PackageAndClassService {
      * @param tableName 表名 <br>
      * @return 类名表名结合实体 <br>
      */
-    GetPackageAndClass getPackageAndClassByTableName(String tableName);
+    ClassAndPackageResp getPackageAndClassByTableName(String tableName);
 
 }

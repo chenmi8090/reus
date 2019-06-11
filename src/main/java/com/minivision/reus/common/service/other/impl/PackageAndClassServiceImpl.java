@@ -4,14 +4,18 @@
 package com.minivision.reus.common.service.other.impl;
 
 import com.minivision.reus.common.constants.ReusParams;
-import com.minivision.reus.common.dto.req.GetPackageAndClass;
+import com.minivision.reus.common.dto.entity.ControllerEntity;
+import com.minivision.reus.common.dto.entity.DTOEntity;
+import com.minivision.reus.common.dto.entity.Entity;
+import com.minivision.reus.common.dto.entity.MapperEntity;
+import com.minivision.reus.common.dto.entity.ServiceEntity;
+import com.minivision.reus.common.dto.resp.ClassAndPackageResp;
 import com.minivision.reus.common.service.other.PackageAndClassService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -36,12 +40,17 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
     private static final String ID = "id";
 
     /**
+     * path
+     */
+    private static final String PATH = "src/main/java";
+
+    /**
      * Mapper
      */
     private static final String MAPPER = "Mapper";
 
     @Override
-    public GetPackageAndClass getPackageAndClassByTableName(String tableName) {
+    public ClassAndPackageResp getPackageAndClassByTableName(String tableName) {
         // 将前台传递来的表名进行分割
         List<String> table = new ArrayList<>(Arrays.asList(tableName.split(STRING_SPLIT)));
         // 去掉最前面的前缀
@@ -59,16 +68,26 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         }
 
         // 填充返回对象
-        GetPackageAndClass getPackageAndClass = new GetPackageAndClass();
-        getPackageAndClass.setMapperClassName(upperCaseName.toString());
-        getPackageAndClass.setCollectionPackage(ReusParams.PACKAGE_CONTROLLER_NAME + caseName);
-        getPackageAndClass.setServicePackage(ReusParams.PACKAGE_SERVICE_NAME + caseName);
-        getPackageAndClass.setMapperClassPackage(ReusParams.PACKAGE_MAPPER_NAME + caseName);
-        getPackageAndClass.setEntityClassPackage(ReusParams.PACKAGE_ENTITY_NAME + caseName);
-        getPackageAndClass.setPrimaryKey(primaryKeyName.toString() + ID);
-        getPackageAndClass.setMapperClassName(upperCaseName.append(MAPPER).toString());
-        getPackageAndClass.setTableName(tableName);
-        return getPackageAndClass;
+        ClassAndPackageResp classAndPackageResp = new ClassAndPackageResp();
+        classAndPackageResp.setTableName(tableName);
+        classAndPackageResp.setEncoding(null);
+        classAndPackageResp.setPaging(true);
+        // Entity层信息
+        classAndPackageResp.setEntity(new Entity(primaryKeyName.toString() + ID,
+                upperCaseName.toString(), ReusParams.PACKAGE_ENTITY_NAME + caseName, PATH, true));
+        // DTO层信息
+        classAndPackageResp.setDto(new DTOEntity(upperCaseName + "DTO",
+                ReusParams.PACKAGE_DTO_NAME + caseName, PATH, true));
+        // Mapper层信息
+        classAndPackageResp.setMapper(new MapperEntity(upperCaseName + "Mapper",
+                ReusParams.PACKAGE_MAPPER_NAME + caseName, PATH, true));
+        // Service层信息
+        classAndPackageResp.setService(new ServiceEntity(upperCaseName + "Service",
+                ReusParams.PACKAGE_SERVICE_NAME + caseName, PATH, true));
+        // Controller层信息
+        classAndPackageResp.setController(new ControllerEntity(upperCaseName + "Controller",
+                ReusParams.PACKAGE_CONTROLLER_NAME + caseName, PATH, true));
+        return classAndPackageResp;
     }
 
     /**

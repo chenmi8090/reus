@@ -1,8 +1,8 @@
 package com.minivision.reus.common.controller.code;
 
 import com.minivision.reus.common.dto.code.CodeDTO;
-import com.minivision.reus.common.dto.req.GetPackageAndClass;
 import com.minivision.reus.common.dto.req.GetTableNameReq;
+import com.minivision.reus.common.dto.resp.ClassAndPackageResp;
 import com.minivision.reus.common.service.code.CodeService;
 import com.minivision.reus.common.service.other.PackageAndClassService;
 import com.minivision.reus.common.util.JsonUtil;
@@ -10,7 +10,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 
@@ -45,8 +49,8 @@ public class CodeController {
     @RequestMapping("/getPackageAndClass")
     @ApiOperation(notes = "根据表名获取包名类名", value = "代码生成", produces = "application/json")
     public String getPackageAndClass(@RequestBody GetTableNameReq getTableNameReq) {
-        GetPackageAndClass packageAndClassByTableName = packageAndClassService.getPackageAndClassByTableName(getTableNameReq.getTableName());
-        return JsonUtil.getSucc4Date(packageAndClassByTableName);
+        ClassAndPackageResp classAndPackageResp = packageAndClassService.getPackageAndClassByTableName(getTableNameReq.getTableName());
+        return JsonUtil.getSucc4Date(classAndPackageResp);
     }
 
 }
