@@ -97,7 +97,8 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
      * @return 首字母大写字符串
      */
     public String upperCase(String str) {
-        char[] ch = str.toCharArray();
+        String lowerCase = str.toLowerCase();
+        char[] ch = lowerCase.toCharArray();
         ch[0] = (char) (ch[0] - 32);
         return new String(ch);
     }
