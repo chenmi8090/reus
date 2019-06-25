@@ -1,5 +1,7 @@
 package com.minivision.reus.common.service.code;
 
+import com.minivision.reus.common.dto.code.CodeDTO;
+
 /**
  * <Description> <br>
  *
@@ -9,4 +11,7 @@ package com.minivision.reus.common.service.code;
  * @CreateDate 2018年11月29日 <br>
  */
 public interface CodeService {
+
+    String generate(CodeDTO codeDTO);
+
 }

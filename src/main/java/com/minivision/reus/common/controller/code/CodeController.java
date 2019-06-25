@@ -1,6 +1,9 @@
 package com.minivision.reus.common.controller.code;
 
+import com.minivision.common.framework.validation.exception.ValidateException;
+import com.minivision.common.framework.validation.util.ValidateUtil;
 import com.minivision.reus.common.dto.code.CodeDTO;
+import com.minivision.reus.common.dto.req.CodeReq;
 import com.minivision.reus.common.dto.req.GetTableNameReq;
 import com.minivision.reus.common.dto.resp.ClassAndPackageResp;
 import com.minivision.reus.common.service.code.CodeService;
@@ -9,6 +12,7 @@ import com.minivision.reus.common.util.JsonUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,8 +46,16 @@ public class CodeController {
 
     @RequestMapping(value = "/generate", method = RequestMethod.POST)
     @ApiOperation(notes = "代码生成", value = "代码生成", produces = "application/json")
-    public String generate(@RequestBody CodeDTO request) {
-        return "";
+    public String generate(@RequestBody CodeReq req) {
+        try {
+            ValidateUtil.validate(req);
+        } catch (ValidateException e) {
+            log.error("generate fail with business, param : {}, exception : {}", req, e);
+            return JsonUtil.getErrorJson(e.getCode(), e.getMsg());
+        }
+        CodeDTO dto = new CodeDTO();
+        BeanUtils.copyProperties(req,dto);
+        return codeService.generate(dto);
     }
 
     @RequestMapping("/getPackageAndClass")

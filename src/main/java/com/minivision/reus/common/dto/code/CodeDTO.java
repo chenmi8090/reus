@@ -23,18 +23,26 @@ public class CodeDTO implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 5868157075370413384L;
+
 	@NotEmpty
 	private String tableName;
+
 	@NotEmpty
 	private String encoding;
 
-	private ClassDTO controller;
+	private String primaryKey = "id";
 
-	private ClassDTO service;
+	private String controllerPackageName;
 
-	private ClassDTO dto;
+	private String servicePackageName;
 
-	private ClassDTO entity;
+	private String dtoPackageName;
 
-	private ClassDTO mapper;
+	private String entityPackageName;
+
+	private String mapperPackageName;
+
+	private DataSourceDto dataSource;
+
+
 }
