@@ -37,7 +37,7 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
     /**
      * ID
      */
-    private static final String ID = "id";
+    private static final String ID = "Id";
 
     /**
      * path
@@ -64,7 +64,7 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         for (String splitName : table) {
             caseName.append(splitName);
             upperCaseName.append(upperCase(splitName));
-            primaryKeyName.append(splitName + STRING_SPLIT);
+            primaryKeyName.append(splitName);
         }
 
         // 填充返回对象
