@@ -1,7 +1,6 @@
 package com.minivision.reus.common.service.code.impl;
 
 import com.minivision.common.framework.constant.DigitConst;
-import com.minivision.common.framework.facade.exception.BusinessException;
 import com.minivision.plus.core.exceptions.MybatisPlusException;
 import com.minivision.plus.core.toolkit.StringPool;
 import com.minivision.plus.generator.AutoGenerator;
@@ -13,15 +12,16 @@ import com.minivision.plus.generator.config.PackageConfig;
 import com.minivision.plus.generator.config.StrategyConfig;
 import com.minivision.plus.generator.config.rules.NamingStrategy;
 import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
+import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
 import com.minivision.reus.common.dto.code.DataSourceDto;
+import com.minivision.reus.common.exception.ReusException;
 import com.minivision.reus.common.service.code.CodeService;
-import org.springframework.beans.factory.annotation.Value;
+import com.minivision.reus.common.util.JsonUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * <Description> <br>
@@ -70,10 +70,9 @@ public class CodeServiceImpl implements CodeService {
         try {
             mpg.execute();
         } catch (MybatisPlusException e) {
-            throw new BusinessException("generate error exception {}",e);
+            throw new ReusException("generate error exception {}",e);
         }
-
-        return null;
+        return JsonUtil.getSucc(ReusConstants.OPER_SUCC);
     }
 
     private void setStrategyConfig(AutoGenerator mpg, CodeDTO codeDTO, PackageConfig pc) {
