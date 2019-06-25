@@ -10,6 +10,7 @@ import com.minivision.plus.generator.config.FileOutConfig;
 import com.minivision.plus.generator.config.GlobalConfig;
 import com.minivision.plus.generator.config.PackageConfig;
 import com.minivision.plus.generator.config.StrategyConfig;
+import com.minivision.plus.generator.config.TemplateConfig;
 import com.minivision.plus.generator.config.rules.NamingStrategy;
 import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
 import com.minivision.reus.common.constants.ReusConstants;
@@ -22,19 +23,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <Description> <br>
  *
  * @author jiangzhenya(jiangzhenya @ aliyun.com)<br>
- * @version 1.0<br>
+ * @version DigitConst.ONE.DigitConst.ZERO<br>
  * @taskId <br>
- * @CreateDate 2018年11月30日 <br>
+ * @CreateDate 2DigitConst.ZERODigitConst.ONE8年DigitConst.ONEDigitConst.ONE月3DigitConst.ZERO日 <br>
  */
 @Service
 public class CodeServiceImpl implements CodeService {
 
-    private static final String DOT = ".";
+    private static final String DOT = "\\.";
+
+    private static final String ID_KEY = "id";
 
     private static final String URL_SUFFIX = "?useSSL=false&useUnicode=true&characterEncoding=";
 
@@ -44,7 +48,7 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String PROJECT_PATH = System.getProperty("java.io.tmpdir");
 
-    private static final String GENERATE_PATH = "/src/main/java";
+    private static final String GENERATE_PATH = "/src/main/resources";
 
     @Override
     public String generate(CodeDTO codeDTO) {
@@ -60,6 +64,11 @@ public class CodeServiceImpl implements CodeService {
         // 包配置
         PackageConfig pc = getPackageConfig(mpg, codeDTO);
 
+        //配置模板
+        TemplateConfig templateConfig = new TemplateConfig();
+        templateConfig.setXml(null);
+        mpg.setTemplate(templateConfig);
+
         //自定义配置
         setInjectionConfig(mpg, codeDTO, pc);
 
@@ -70,7 +79,7 @@ public class CodeServiceImpl implements CodeService {
         try {
             mpg.execute();
         } catch (MybatisPlusException e) {
-            throw new ReusException("generate error exception {}",e);
+            throw new ReusException("generate error exception {}", e);
         }
         return JsonUtil.getSucc(ReusConstants.OPER_SUCC);
     }
@@ -82,10 +91,14 @@ public class CodeServiceImpl implements CodeService {
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
         strategy.setInclude(codeDTO.getTableName());
-        strategy.setSuperEntityColumns(codeDTO.getPrimaryKey());
+        if (Objects.nonNull(codeDTO.getPrimaryKey())) {
+            strategy.setSuperEntityColumns(codeDTO.getPrimaryKey());
+        } else {
+            strategy.setSuperEntityColumns(ID_KEY);
+        }
         strategy.setControllerMappingHyphenStyle(true);
-        String tablePrefix = codeDTO.getTableName().split("_")[DigitConst.ZERO]+="_";
-        strategy.setTablePrefix(tablePrefix);
+        String tablePrefix = codeDTO.getTableName().split("_")[DigitConst.ZERO] += "_";
+        strategy.setTablePrefix(new String[] { tablePrefix });
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
     }
@@ -93,32 +106,31 @@ public class CodeServiceImpl implements CodeService {
     private void setGlobalConfig(AutoGenerator mpg) {
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir(PROJECT_PATH + GENERATE_PATH);
+        gc.setOpen(true);
         gc.setAuthor("wcx");
-        gc.setOpen(false);
         mpg.setGlobalConfig(gc);
     }
 
     private String getParentPackageName(CodeDTO codeDTO) {
         String parent = "";
-
         String[] controller = codeDTO.getControllerPackageName().split(DOT);
         String[] entity = codeDTO.getEntityPackageName().split(DOT);
         String[] mapper = codeDTO.getMapperPackageName().split(DOT);
         String[] service = codeDTO.getServicePackageName().split(DOT);
         if (controller.length == entity.length && entity.length == mapper.length && mapper.length == service.length) {
-            for (int i = 0; i < mapper.length; i++) {
+            for (int i = DigitConst.ZERO; i < mapper.length - DigitConst.ONE; i++) {
                 if (controller[i].equals(entity[i]) && entity[i].equals(mapper[i]) && mapper[i].equals(service[i])) {
-                    parent = parent + controller[i] + DOT;
+                    parent = parent + controller[i] + StringPool.DOT;
                 }
             }
         } else {
             //说明每个
-            for (int a = 0; a < controller.length; a++) {
-                for (int b = 0; b < entity.length; b++) {
-                    for (int c = 0; c < mapper.length; c++) {
-                        for (int d = 0; d < service.length; d++) {
+            for (int a = DigitConst.ZERO; a < controller.length - DigitConst.ONE; a++) {
+                for (int b = DigitConst.ZERO; b < entity.length - DigitConst.ONE; b++) {
+                    for (int c = DigitConst.ZERO; c < mapper.length - DigitConst.ONE; c++) {
+                        for (int d = DigitConst.ZERO; d < service.length - DigitConst.ONE; d++) {
                             if (controller[a].equals(entity[b]) && entity[b].equals(mapper[c]) && mapper[c].equals(service[d])) {
-                                parent = parent + controller[a] + DOT;
+                                parent = parent + controller[a] + StringPool.DOT;
                             }
                         }
                     }
@@ -126,7 +138,7 @@ public class CodeServiceImpl implements CodeService {
             }
         }
 
-        return parent;
+        return parent.substring(DigitConst.ZERO, parent.length() - DigitConst.ONE);
     }
 
     private PackageConfig getPackageConfig(AutoGenerator mpg, CodeDTO codeDTO) {
@@ -134,33 +146,32 @@ public class CodeServiceImpl implements CodeService {
         String parent = getParentPackageName(codeDTO);
         pc.setParent(parent);
 
-        codeDTO.getServicePackageName().replaceAll(DOT + pc.getModuleName(), "").replaceAll(parent, "");
-
         String[] controller = codeDTO.getControllerPackageName().split(DOT);
         String[] entity = codeDTO.getEntityPackageName().split(DOT);
         String[] mapper = codeDTO.getMapperPackageName().split(DOT);
         String[] service = codeDTO.getServicePackageName().split(DOT);
-        if (controller[controller.length - 1].equals(entity[entity.length - 1]) &&
-                entity[entity.length - 1].equals(mapper[mapper.length - 1]) && mapper[mapper.length - 1].equals(service[service.length - 1])) {
-            pc.setModuleName(controller[controller.length - 1]);
-        } else {
-            String[] split = codeDTO.getTableName().split("_");
-            String moduleName = null;
-            //过滤表前缀
-            for (int i = 1; i < split.length; i++) {
-                moduleName += split[i];
+        if (controller.length > DigitConst.ZERO && entity.length > DigitConst.ZERO && mapper.length > DigitConst.ZERO
+                && service.length > DigitConst.ZERO) {
+            if (controller[controller.length - DigitConst.ONE].equals(entity[entity.length - DigitConst.ONE]) &&
+                    entity[entity.length - DigitConst.ONE].equals(mapper[mapper.length - DigitConst.ONE]) && mapper[mapper.length - DigitConst.ONE]
+                    .equals(service[service.length - DigitConst.ONE])) {
+                pc.setModuleName(controller[controller.length - DigitConst.ONE]);
+            } else {
+                String[] split = codeDTO.getTableName().split("_");
+                String moduleName = "";
+                //过滤表前缀
+                for (int i = DigitConst.ONE; i < split.length; i++) {
+                    moduleName += split[i];
+                }
+                pc.setModuleName(moduleName);
             }
-            pc.setModuleName(moduleName);
         }
-        pc.setService(codeDTO.getServicePackageName().replaceAll(DOT + pc.getModuleName(), "").replaceAll(parent, "")
-                .substring(DigitConst.ZERO, codeDTO.getServicePackageName().length()));
-        pc.setController(codeDTO.getControllerPackageName().replaceAll(DOT + pc.getModuleName(), "").replaceAll(parent, "")
-                .substring(DigitConst.ZERO, codeDTO.getControllerPackageName().length()));
-        pc.setMapper(codeDTO.getMapperPackageName().replaceAll(DOT + pc.getModuleName(), "").replaceAll(parent, "")
-                .substring(DigitConst.ZERO, codeDTO.getMapperPackageName().length()));
-        pc.setEntity(codeDTO.getEntityPackageName().replaceAll(DOT + pc.getModuleName(), "").replaceAll(parent, "")
-                .substring(DigitConst.ZERO, codeDTO.getEntityPackageName().length()));
-        pc.setServiceImpl(pc.getService() + pc.getModuleName() + pc.getServiceImpl());
+        pc.setService(codeDTO.getServicePackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setController(
+                codeDTO.getControllerPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setMapper(codeDTO.getMapperPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setEntity(codeDTO.getEntityPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getServiceImpl());
 
         mpg.setPackageInfo(pc);
 
@@ -172,7 +183,7 @@ public class CodeServiceImpl implements CodeService {
         DataSourceConfig dsc = new DataSourceConfig();
         DataSourceDto dataSource = codeDTO.getDataSource();
         String url = JDBC + dataSource.getDbType() + CONNECTOR + dataSource.getLinkUrl() + ":" + dataSource.getLinkPort()
-                + "\\/" + dataSource.getLinkDbName() + URL_SUFFIX + dataSource.getEnCoding();
+                + "/" + dataSource.getLinkDbName() + URL_SUFFIX + dataSource.getEnCoding();
         dsc.setUrl(url);
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername(dataSource.getLinkUserName());
@@ -202,6 +213,9 @@ public class CodeServiceImpl implements CodeService {
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
+
+        cfg.setFileOutConfigList(focList);
+        mpg.setCfg(cfg);
     }
 
 }
