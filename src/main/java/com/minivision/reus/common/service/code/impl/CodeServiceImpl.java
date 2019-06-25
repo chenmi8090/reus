@@ -56,7 +56,7 @@ public class CodeServiceImpl implements CodeService {
         AutoGenerator mpg = new AutoGenerator();
 
         //全局配置
-        setGlobalConfig(mpg);
+        setGlobalConfig(mpg,codeDTO);
 
         // 数据源配置
         setDataSourceConfig(mpg, codeDTO);
@@ -103,11 +103,14 @@ public class CodeServiceImpl implements CodeService {
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());
     }
 
-    private void setGlobalConfig(AutoGenerator mpg) {
+    private void setGlobalConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         GlobalConfig gc = new GlobalConfig();
         gc.setOutputDir(PROJECT_PATH + GENERATE_PATH);
         gc.setOpen(true);
         gc.setAuthor("wcx");
+        if (Objects.nonNull(codeDTO.getMapperName())) {
+            gc.setMapperName(codeDTO.getMapperName());
+        }
         mpg.setGlobalConfig(gc);
     }
 

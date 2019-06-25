@@ -44,5 +44,7 @@ public class CodeDTO implements Serializable {
 
 	private DataSourceDto dataSource;
 
+	private String mapperName;
+
 
 }
