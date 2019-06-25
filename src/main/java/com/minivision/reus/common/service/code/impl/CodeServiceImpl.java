@@ -16,13 +16,14 @@ import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
 import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
 import com.minivision.reus.common.dto.code.DataSourceDto;
-import com.minivision.reus.common.exception.ReusException;
 import com.minivision.reus.common.service.code.CodeService;
 import com.minivision.reus.common.util.JsonUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -46,9 +47,9 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String JDBC = "jdbc:";
 
-    private static final String PROJECT_PATH = System.getProperty("java.io.tmpdir");
+    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\" , "\\/");
 
-    private static final String GENERATE_PATH = "/src/main/resources";
+    private static final String GENERATE_PATH = "/src/main/resources/zip/";
 
     @Override
     public String generate(CodeDTO codeDTO) {
@@ -56,7 +57,7 @@ public class CodeServiceImpl implements CodeService {
         AutoGenerator mpg = new AutoGenerator();
 
         //全局配置
-        setGlobalConfig(mpg,codeDTO);
+        setGlobalConfig(mpg, codeDTO);
 
         // 数据源配置
         setDataSourceConfig(mpg, codeDTO);
@@ -76,12 +77,15 @@ public class CodeServiceImpl implements CodeService {
         setStrategyConfig(mpg, codeDTO, pc);
 
         //启动
+        Map<String, String> map = new HashMap<>();
+        String execute = null;
         try {
-            mpg.execute();
+            execute = mpg.execute();
+            map.put("path" , execute);
         } catch (MybatisPlusException e) {
-            throw new ReusException("generate error exception {}", e);
+            return JsonUtil.getErrorJson(ReusConstants.SYS_ERROR);
         }
-        return JsonUtil.getSucc(ReusConstants.OPER_SUCC);
+        return JsonUtil.getSucc(map, ReusConstants.OPER_SUCC);
     }
 
     private void setStrategyConfig(AutoGenerator mpg, CodeDTO codeDTO, PackageConfig pc) {
@@ -212,7 +216,7 @@ public class CodeServiceImpl implements CodeService {
             @Override
             public String outputFile(com.minivision.plus.generator.config.po.TableInfo tableInfo) {
                 // 自定义输出文件名
-                return PROJECT_PATH + "/src/main/resources/mapper/" + pc.getModuleName() + "/"
+                return PROJECT_PATH + "/src/main/resources/zip/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

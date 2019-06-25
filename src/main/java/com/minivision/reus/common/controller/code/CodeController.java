@@ -35,7 +35,7 @@ import javax.annotation.Resource;
 @Slf4j
 @CrossOrigin
 @RequestMapping("/code")
-@Api(value = "/code", tags = "代码生成器")
+@Api(value = "/code" , tags = "代码生成器")
 public class CodeController {
 
     @Autowired
@@ -44,22 +44,22 @@ public class CodeController {
     @Resource
     private PackageAndClassService packageAndClassService;
 
-    @RequestMapping(value = "/generate", method = RequestMethod.POST)
-    @ApiOperation(notes = "代码生成", value = "代码生成", produces = "application/json")
+    @RequestMapping(value = "/generate" , method = RequestMethod.POST)
+    @ApiOperation(notes = "代码生成" , value = "代码生成" , produces = "application/json")
     public String generate(@RequestBody CodeReq req) {
         try {
             ValidateUtil.validate(req);
         } catch (ValidateException e) {
-            log.error("generate fail with business, param : {}, exception : {}", req, e);
+            log.error("generate fail with business, param : {}, exception : {}" , req, e);
             return JsonUtil.getErrorJson(e.getCode(), e.getMsg());
         }
         CodeDTO dto = new CodeDTO();
-        BeanUtils.copyProperties(req,dto);
+        BeanUtils.copyProperties(req, dto);
         return codeService.generate(dto);
     }
 
     @RequestMapping("/getPackageAndClass")
-    @ApiOperation(notes = "根据表名获取包名类名", value = "代码生成", produces = "application/json")
+    @ApiOperation(notes = "根据表名获取包名类名" , value = "代码生成" , produces = "application/json")
     public String getPackageAndClass(@RequestBody GetTableNameReq getTableNameReq) {
         ClassAndPackageResp classAndPackageResp = packageAndClassService.getPackageAndClassByTableName(getTableNameReq.getTableName());
         return JsonUtil.getSucc4Date(classAndPackageResp);
