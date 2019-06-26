@@ -33,15 +33,15 @@ public class CodeDTO implements Serializable {
 
 	private String primaryKey = "id";
 
-	private String controllerPackageName;
+	private ClassDTO controller;
 
-	private String servicePackageName;
+	private ClassDTO service;
 
-	private String dtoPackageName;
+	private ClassDTO dto;
 
-	private String entityPackageName;
+	private ClassDTO entity;
 
-	private String mapperPackageName;
+	private ClassDTO mapper;
 
     private DatabaseDTO dataSource;
 

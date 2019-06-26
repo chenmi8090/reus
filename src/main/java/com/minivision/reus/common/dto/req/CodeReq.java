@@ -4,6 +4,7 @@
 package com.minivision.reus.common.dto.req;
 
 import com.minivision.common.framework.validation.annotation.NotEmpty;
+import com.minivision.reus.common.dto.code.ClassDTO;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import lombok.Data;
 
@@ -28,18 +29,18 @@ public class CodeReq implements Serializable {
     private String encoding;
 
     @NotEmpty
-    private String controllerPackageName;
+    private ClassDTO controller;
 
     @NotEmpty
-    private String servicePackageName;
+    private ClassDTO service;
 
-    private String dtoPackageName;
-
-    @NotEmpty
-    private String entityPackageName;
+    private ClassDTO dto;
 
     @NotEmpty
-    private String mapperPackageName;
+    private ClassDTO entity;
+
+    @NotEmpty
+    private ClassDTO mapper;
 
     @NotEmpty
     private String mapperName;

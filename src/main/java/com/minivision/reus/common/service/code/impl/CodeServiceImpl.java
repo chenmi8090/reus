@@ -116,15 +116,27 @@ public class CodeServiceImpl implements CodeService {
         if (Objects.nonNull(codeDTO.getMapperName())) {
             gc.setMapperName(codeDTO.getMapperName());
         }
+        if (Objects.nonNull(codeDTO.getController().getName())){
+            gc.setControllerName(codeDTO.getController().getName());
+        }
+        if (Objects.nonNull(codeDTO.getService().getName())){
+            gc.setServiceName(codeDTO.getService().getName());
+        }
+        if (Objects.nonNull(codeDTO.getMapper().getName())){
+            gc.setMapperName(codeDTO.getMapper().getName());
+        }
+        if (Objects.nonNull(codeDTO.getEntity().getName())){
+            gc.setEntityName(codeDTO.getEntity().getName());
+        }
         mpg.setGlobalConfig(gc);
     }
 
     private String getParentPackageName(CodeDTO codeDTO) {
         String parent = "";
-        String[] controller = codeDTO.getControllerPackageName().split(DOT);
-        String[] entity = codeDTO.getEntityPackageName().split(DOT);
-        String[] mapper = codeDTO.getMapperPackageName().split(DOT);
-        String[] service = codeDTO.getServicePackageName().split(DOT);
+        String[] controller = codeDTO.getController().getPackageName().split(DOT);
+        String[] entity = codeDTO.getEntity().getPackageName().split(DOT);
+        String[] mapper = codeDTO.getMapper().getPackageName().split(DOT);
+        String[] service = codeDTO.getService().getPackageName().split(DOT);
         if (controller.length == entity.length && entity.length == mapper.length && mapper.length == service.length) {
             for (int i = DigitConst.ZERO; i < mapper.length - DigitConst.ONE; i++) {
                 if (controller[i].equals(entity[i]) && entity[i].equals(mapper[i]) && mapper[i].equals(service[i])) {
@@ -154,10 +166,10 @@ public class CodeServiceImpl implements CodeService {
         String parent = getParentPackageName(codeDTO);
         pc.setParent(parent);
 
-        String[] controller = codeDTO.getControllerPackageName().split(DOT);
-        String[] entity = codeDTO.getEntityPackageName().split(DOT);
-        String[] mapper = codeDTO.getMapperPackageName().split(DOT);
-        String[] service = codeDTO.getServicePackageName().split(DOT);
+        String[] controller = codeDTO.getController().getPackageName().split(DOT);
+        String[] entity = codeDTO.getEntity().getPackageName().split(DOT);
+        String[] mapper = codeDTO.getMapper().getPackageName().split(DOT);
+        String[] service = codeDTO.getService().getPackageName().split(DOT);
         if (controller.length > DigitConst.ZERO && entity.length > DigitConst.ZERO && mapper.length > DigitConst.ZERO
                 && service.length > DigitConst.ZERO) {
             if (controller[controller.length - DigitConst.ONE].equals(entity[entity.length - DigitConst.ONE]) &&
@@ -174,11 +186,10 @@ public class CodeServiceImpl implements CodeService {
                 pc.setModuleName(moduleName);
             }
         }
-        pc.setService(codeDTO.getServicePackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setController(
-                codeDTO.getControllerPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setMapper(codeDTO.getMapperPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setEntity(codeDTO.getEntityPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setService(codeDTO.getService().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setController(codeDTO.getController().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setMapper(codeDTO.getMapper().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setEntity(codeDTO.getEntity().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
         pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getServiceImpl());
 
         mpg.setPackageInfo(pc);
