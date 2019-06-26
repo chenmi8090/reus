@@ -4,8 +4,7 @@
 package com.minivision.reus.common.dto.req;
 
 import com.minivision.common.framework.validation.annotation.NotEmpty;
-import com.minivision.reus.common.dto.code.ClassDTO;
-import com.minivision.reus.common.dto.code.DataSourceDto;
+import com.minivision.reus.common.dto.database.DatabaseDTO;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -20,7 +19,7 @@ import java.io.Serializable;
 @Data
 public class CodeReq implements Serializable {
 
-    private DataSourceDto dataSource;
+    private DatabaseDTO dataSource;
 
     @NotEmpty
     private String tableName;

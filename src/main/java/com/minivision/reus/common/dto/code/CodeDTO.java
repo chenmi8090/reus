@@ -1,6 +1,7 @@
 package com.minivision.reus.common.dto.code;
 
 import com.minivision.common.framework.validation.annotation.NotEmpty;
+import com.minivision.reus.common.dto.database.DatabaseDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -42,7 +43,7 @@ public class CodeDTO implements Serializable {
 
 	private String mapperPackageName;
 
-	private DataSourceDto dataSource;
+    private DatabaseDTO dataSource;
 
 	private String mapperName;
 

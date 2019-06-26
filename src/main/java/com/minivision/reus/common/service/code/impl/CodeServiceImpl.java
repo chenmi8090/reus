@@ -16,7 +16,10 @@ import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
 import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
 import com.minivision.reus.common.dto.code.DataSourceDto;
+import com.minivision.reus.common.dto.database.DatabaseDTO;
+import com.minivision.reus.common.dto.database.DbType;
 import com.minivision.reus.common.service.code.CodeService;
+import com.minivision.reus.common.util.DbUtil;
 import com.minivision.reus.common.util.JsonUtil;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +50,7 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String JDBC = "jdbc:";
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\" , "\\/");
+    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\", "\\/");
 
     private static final String GENERATE_PATH = "/src/main/resources/zip/";
 
@@ -81,7 +84,7 @@ public class CodeServiceImpl implements CodeService {
         String execute = null;
         try {
             execute = mpg.execute();
-            map.put("path" , execute);
+            map.put("path", execute);
         } catch (MybatisPlusException e) {
             return JsonUtil.getErrorJson(ReusConstants.SYS_ERROR);
         }
@@ -188,13 +191,14 @@ public class CodeServiceImpl implements CodeService {
     private void setDataSourceConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        DataSourceDto dataSource = codeDTO.getDataSource();
-        String url = JDBC + dataSource.getDbType() + CONNECTOR + dataSource.getLinkUrl() + ":" + dataSource.getLinkPort()
-                + "/" + dataSource.getLinkDbName() + URL_SUFFIX + dataSource.getEnCoding();
+        DatabaseDTO dataSource = codeDTO.getDataSource();
+        String url = JDBC + dataSource.getDatabaseType().toLowerCase() + CONNECTOR + dataSource.getHostName() + ":" + dataSource.getPort()
+                + "/" + dataSource.getDatabase() + URL_SUFFIX + dataSource.getEncoding();
         dsc.setUrl(url);
-        dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername(dataSource.getLinkUserName());
-        dsc.setPassword(dataSource.getLinkPassWord());
+        DbType dbType = DbType.valueOf(dataSource.getDatabaseType());
+        dsc.setDriverName(dbType.getDriverClass());
+        dsc.setUsername(dataSource.getUserName());
+        dsc.setPassword(dataSource.getPassword());
         mpg.setDataSource(dsc);
     }
 
