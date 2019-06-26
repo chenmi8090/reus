@@ -15,11 +15,9 @@ import com.minivision.plus.generator.config.rules.NamingStrategy;
 import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
 import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
-import com.minivision.reus.common.dto.code.DataSourceDto;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import com.minivision.reus.common.dto.database.DbType;
 import com.minivision.reus.common.service.code.CodeService;
-import com.minivision.reus.common.util.DbUtil;
 import com.minivision.reus.common.util.JsonUtil;
 import org.springframework.stereotype.Service;
 
