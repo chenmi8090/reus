@@ -56,16 +56,19 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         // 去掉最前面的前缀
         table.remove(0);
         // 组合成包名
-        StringBuffer caseName = new StringBuffer();
+        StringBuffer caseNames = new StringBuffer();
         // 组合成类名
         StringBuffer upperCaseName = new StringBuffer();
         // 组成主键ID
         StringBuffer primaryKeyName = new StringBuffer();
         for (String splitName : table) {
-            caseName.append(splitName);
+            caseNames.append(splitName);
             upperCaseName.append(upperCase(splitName));
-            primaryKeyName.append(splitName);
+            primaryKeyName.append(upperCaseName);
         }
+
+        // 全小写
+        String caseName = caseNames.toString().toLowerCase();
 
         // 填充返回对象
         ClassAndPackageResp classAndPackageResp = new ClassAndPackageResp();
@@ -73,7 +76,7 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         classAndPackageResp.setEncoding(null);
         classAndPackageResp.setPaging(true);
         // Entity层信息
-        classAndPackageResp.setEntity(new Entity(primaryKeyName.toString() + ID,
+        classAndPackageResp.setEntity(new Entity(lowerCase(primaryKeyName.toString()) + ID,
                 upperCaseName.toString(), ReusParams.PACKAGE_ENTITY_NAME + caseName, PATH, true));
         // DTO层信息
         classAndPackageResp.setDto(new DTOEntity(upperCaseName + "DTO",
@@ -101,5 +104,17 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         char[] ch = lowerCase.toCharArray();
         ch[0] = (char) (ch[0] - 32);
         return new String(ch);
+    }
+
+    /**
+     * Description: 将字符串首字母小写
+     *
+     * @param str 表名分割内容
+     * @return 首字母大写字符串
+     */
+    public String lowerCase(String str) {
+        char[] chars = str.toCharArray();
+        chars[0] = (char) (chars[0] + 32);
+        return new String(chars);
     }
 }
