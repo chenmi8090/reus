@@ -8,6 +8,7 @@ import com.minivision.reus.common.dto.code.ClassDTO;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -28,21 +29,21 @@ public class CodeReq implements Serializable {
     @NotEmpty
     private String encoding;
 
-    @NotEmpty
+    @NotNull
     private ClassDTO controller;
 
-    @NotEmpty
+    @NotNull
     private ClassDTO service;
 
     private ClassDTO dto;
 
-    @NotEmpty
+    @NotNull
     private ClassDTO entity;
 
-    @NotEmpty
+    @NotNull
     private ClassDTO mapper;
 
-    @NotEmpty
+    @NotNull
     private String mapperName;
 
     private String primaryKey = "id";
