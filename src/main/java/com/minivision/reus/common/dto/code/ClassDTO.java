@@ -15,6 +15,8 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ClassDTO {
+
+    @NotEmpty
     private String name;
 
     @NotEmpty
