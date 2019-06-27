@@ -59,12 +59,9 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         StringBuffer caseNames = new StringBuffer();
         // 组合成类名
         StringBuffer upperCaseName = new StringBuffer();
-        // 组成主键ID
-        StringBuffer primaryKeyName = new StringBuffer();
         for (String splitName : table) {
             caseNames.append(splitName);
             upperCaseName.append(upperCase(splitName));
-            primaryKeyName.append(upperCaseName);
         }
 
         // 全小写
@@ -76,7 +73,7 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         classAndPackageResp.setEncoding(null);
         classAndPackageResp.setPaging(true);
         // Entity层信息
-        classAndPackageResp.setEntity(new Entity(lowerCase(primaryKeyName.toString()) + ID,
+        classAndPackageResp.setEntity(new Entity(lowerCase(upperCaseName.toString()) + ID,
                 upperCaseName.toString(), ReusParams.PACKAGE_ENTITY_NAME + caseName, PATH, true));
         // DTO层信息
         classAndPackageResp.setDto(new DTOEntity(upperCaseName + "DTO",
