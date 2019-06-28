@@ -48,9 +48,9 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String JDBC = "jdbc:";
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\", "\\/");
+    private static final String PROJECT_PATH = System.getProperty("java.io.tmpdir").replaceAll("\\\\", "\\/");
 
-    private static final String GENERATE_PATH = "/src/main/resources/zip/";
+    private static final String GENERATE_PATH = "/generate/zip/";
 
     @Override
     public String generate(CodeDTO codeDTO) {
