@@ -229,7 +229,7 @@ public class CodeServiceImpl implements CodeService {
             @Override
             public String outputFile(com.minivision.plus.generator.config.po.TableInfo tableInfo) {
                 // 自定义输出文件名
-                return PROJECT_PATH + "/src/main/resources/zip/mapper/" + pc.getModuleName() + "/"
+                return PROJECT_PATH + GENERATE_PATH + "/src/main/resources/zip/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
