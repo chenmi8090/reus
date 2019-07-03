@@ -7,6 +7,8 @@ import com.minivision.reus.common.constants.ReusParams;
 import com.minivision.reus.common.dto.entity.ControllerEntity;
 import com.minivision.reus.common.dto.entity.DTOEntity;
 import com.minivision.reus.common.dto.entity.Entity;
+import com.minivision.reus.common.dto.entity.FacadeEntity;
+import com.minivision.reus.common.dto.entity.MainServiceEntity;
 import com.minivision.reus.common.dto.entity.MapperEntity;
 import com.minivision.reus.common.dto.entity.ServiceEntity;
 import com.minivision.reus.common.dto.resp.ClassAndPackageResp;
@@ -87,6 +89,12 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
         // Controller层信息
         classAndPackageResp.setController(new ControllerEntity(upperCaseName + "Controller",
                 ReusParams.PACKAGE_CONTROLLER_NAME + caseName, PATH, true));
+        //Facade层信息
+        classAndPackageResp.setFacade(new FacadeEntity(upperCaseName + "Facade",
+                ReusParams.PACKAGE_FACADE_NAME, PATH, true));
+        //MainService层信息
+        classAndPackageResp.setMainService(new MainServiceEntity(upperCaseName + "Service",
+                ReusParams.PACKAGE_MAIN_SERVICE_NAME, PATH, true));
         return classAndPackageResp;
     }
 

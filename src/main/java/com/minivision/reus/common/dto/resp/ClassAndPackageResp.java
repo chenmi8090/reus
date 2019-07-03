@@ -6,6 +6,8 @@ package com.minivision.reus.common.dto.resp;
 import com.minivision.reus.common.dto.entity.ControllerEntity;
 import com.minivision.reus.common.dto.entity.DTOEntity;
 import com.minivision.reus.common.dto.entity.Entity;
+import com.minivision.reus.common.dto.entity.FacadeEntity;
+import com.minivision.reus.common.dto.entity.MainServiceEntity;
 import com.minivision.reus.common.dto.entity.MapperEntity;
 import com.minivision.reus.common.dto.entity.ServiceEntity;
 import lombok.AllArgsConstructor;
@@ -69,5 +71,15 @@ public class ClassAndPackageResp implements Serializable {
      * Mapper文件参数
      */
     private MapperEntity mapper;
+
+    /**
+     * mainService文件参数
+     */
+    private MainServiceEntity mainService;
+
+    /**
+     * facade 文件参数
+     */
+    private FacadeEntity facade;
 
 }

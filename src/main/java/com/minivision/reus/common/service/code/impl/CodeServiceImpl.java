@@ -42,15 +42,17 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String ID_KEY = "id";
 
+    private static final String IMPL_KEY = "Impl";
+
     private static final String URL_SUFFIX = "?useSSL=false&useUnicode=true&characterEncoding=";
 
     private static final String CONNECTOR = "://";
 
     private static final String JDBC = "jdbc:";
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\", "\\/");
+    private static final String PROJECT_PATH = System.getProperty("java.io.tmpdir").replaceAll("\\\\", "\\/");
 
-    private static final String GENERATE_PATH = "/generate/zip/";
+    private static final String GENERATE_PATH = "/generate/zip/src/main/java/";
 
     @Override
     public String generate(CodeDTO codeDTO) {
@@ -116,18 +118,28 @@ public class CodeServiceImpl implements CodeService {
         if (Objects.nonNull(codeDTO.getMapperName())) {
             gc.setMapperName(codeDTO.getMapperName());
         }
-        if (Objects.nonNull(codeDTO.getController().getName())){
+        if (Objects.nonNull(codeDTO.getController().getName())) {
             gc.setControllerName(codeDTO.getController().getName());
         }
-        if (Objects.nonNull(codeDTO.getService().getName())){
+        if (Objects.nonNull(codeDTO.getService().getName())) {
             gc.setServiceName(codeDTO.getService().getName());
+            gc.setServiceImplName(codeDTO.getService().getName() + IMPL_KEY);
         }
-        if (Objects.nonNull(codeDTO.getMapper().getName())){
+        if (Objects.nonNull(codeDTO.getMapper().getName())) {
             gc.setMapperName(codeDTO.getMapper().getName());
         }
-        if (Objects.nonNull(codeDTO.getEntity().getName())){
+        if (Objects.nonNull(codeDTO.getEntity().getName())) {
             gc.setEntityName(codeDTO.getEntity().getName());
         }
+        if (Objects.nonNull(codeDTO.getFacade().getName())) {
+            gc.setFacadeName(codeDTO.getFacade().getName());
+            gc.setFacadeImplName(codeDTO.getFacade().getName() + IMPL_KEY);
+        }
+        if (Objects.nonNull(codeDTO.getMainService().getName())) {
+            gc.setMainServiceName(codeDTO.getMainService().getName());
+            gc.setMainServiceImplName(codeDTO.getMainService().getName() + IMPL_KEY);
+        }
+
         mpg.setGlobalConfig(gc);
     }
 
@@ -186,11 +198,40 @@ public class CodeServiceImpl implements CodeService {
                 pc.setModuleName(moduleName);
             }
         }
-        pc.setService(codeDTO.getService().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setController(codeDTO.getController().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setMapper(codeDTO.getMapper().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
-        pc.setEntity(codeDTO.getEntity().getPackageName().replaceAll(StringPool.DOT + pc.getModuleName(), "").replaceAll(parent + StringPool.DOT, ""));
+        pc.setService(codeDTO.getService().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
         pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getServiceImpl());
+
+        pc.setMainService(codeDTO.getMainService().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+        pc.setMainServiceImpl(pc.getMainService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getMainServiceImpl());
+
+        pc.setFacade(codeDTO.getFacade().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+        pc.setFacadeImpl(pc.getFacade() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getFacadeImpl());
+
+        pc.setController(codeDTO.getController().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+
+        pc.setMapper(codeDTO.getMapper().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+
+        pc.setEntity(codeDTO.getEntity().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+
+        pc.setReqDto(codeDTO.getDto().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
+
+        pc.setRespDto(codeDTO.getDto().getPackageName().
+                replaceAll(StringPool.DOT + pc.getModuleName(), "").
+                replaceAll(parent + StringPool.DOT, ""));
 
         mpg.setPackageInfo(pc);
 
@@ -229,7 +270,7 @@ public class CodeServiceImpl implements CodeService {
             @Override
             public String outputFile(com.minivision.plus.generator.config.po.TableInfo tableInfo) {
                 // 自定义输出文件名
-                return PROJECT_PATH + GENERATE_PATH + "/src/main/resources/zip/mapper/" + pc.getModuleName() + "/"
+                return PROJECT_PATH + GENERATE_PATH + "resources/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

@@ -21,6 +21,7 @@ import java.io.Serializable;
 @Data
 public class CodeReq implements Serializable {
 
+    @NotNull
     private DatabaseDTO dataSource;
 
     @NotEmpty
@@ -35,7 +36,14 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO service;
 
+    @NotNull
     private ClassDTO dto;
+
+    @NotNull
+    private ClassDTO mainService;
+
+    @NotNull
+    private ClassDTO facade;
 
     @NotNull
     private ClassDTO entity;

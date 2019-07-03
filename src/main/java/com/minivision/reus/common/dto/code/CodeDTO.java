@@ -39,6 +39,10 @@ public class CodeDTO implements Serializable {
 
 	private ClassDTO dto;
 
+	private ClassDTO mainService;
+
+	private ClassDTO facade;
+
 	private ClassDTO entity;
 
 	private ClassDTO mapper;
