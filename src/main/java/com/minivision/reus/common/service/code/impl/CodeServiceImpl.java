@@ -77,7 +77,7 @@ public class CodeServiceImpl implements CodeService {
         setInjectionConfig(mpg, codeDTO, pc);
 
         // 策略配置
-        setStrategyConfig(mpg, codeDTO, pc);
+        setStrategyConfig(mpg, codeDTO);
 
         //启动
         Map<String, String> map = new HashMap<>();
@@ -85,13 +85,13 @@ public class CodeServiceImpl implements CodeService {
         try {
             execute = mpg.execute();
             map.put("path", execute);
-        } catch (MybatisPlusException e) {
+        } catch (Exception e) {
             return JsonUtil.getErrorJson(ReusConstants.SYS_ERROR);
         }
         return JsonUtil.getSucc(map, ReusConstants.OPER_SUCC);
     }
 
-    private void setStrategyConfig(AutoGenerator mpg, CodeDTO codeDTO, PackageConfig pc) {
+    private void setStrategyConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
@@ -143,50 +143,26 @@ public class CodeServiceImpl implements CodeService {
         mpg.setGlobalConfig(gc);
     }
 
-    private String getParentPackageName(CodeDTO codeDTO) {
-        String parent = "";
-        String[] controller = codeDTO.getController().getPackageName().split(DOT);
-        String[] entity = codeDTO.getEntity().getPackageName().split(DOT);
-        String[] mapper = codeDTO.getMapper().getPackageName().split(DOT);
-        String[] service = codeDTO.getService().getPackageName().split(DOT);
-        if (controller.length == entity.length && entity.length == mapper.length && mapper.length == service.length) {
-            for (int i = DigitConst.ZERO; i < mapper.length - DigitConst.ONE; i++) {
-                if (controller[i].equals(entity[i]) && entity[i].equals(mapper[i]) && mapper[i].equals(service[i])) {
-                    parent = parent + controller[i] + StringPool.DOT;
-                }
-            }
-        } else {
-            //说明每个
-            for (int a = DigitConst.ZERO; a < controller.length - DigitConst.ONE; a++) {
-                for (int b = DigitConst.ZERO; b < entity.length - DigitConst.ONE; b++) {
-                    for (int c = DigitConst.ZERO; c < mapper.length - DigitConst.ONE; c++) {
-                        for (int d = DigitConst.ZERO; d < service.length - DigitConst.ONE; d++) {
-                            if (controller[a].equals(entity[b]) && entity[b].equals(mapper[c]) && mapper[c].equals(service[d])) {
-                                parent = parent + controller[a] + StringPool.DOT;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return parent.substring(DigitConst.ZERO, parent.length() - DigitConst.ONE);
-    }
-
     private PackageConfig getPackageConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         PackageConfig pc = new PackageConfig();
-        String parent = getParentPackageName(codeDTO);
-        pc.setParent(parent);
+        pc.setParent("");
 
         String[] controller = codeDTO.getController().getPackageName().split(DOT);
         String[] entity = codeDTO.getEntity().getPackageName().split(DOT);
         String[] mapper = codeDTO.getMapper().getPackageName().split(DOT);
         String[] service = codeDTO.getService().getPackageName().split(DOT);
+        String[] mainService = codeDTO.getMainService().getPackageName().split(DOT);
+        String[] facade = codeDTO.getFacade().getPackageName().split(DOT);
+        String[] dto = codeDTO.getDto().getPackageName().split(DOT);
         if (controller.length > DigitConst.ZERO && entity.length > DigitConst.ZERO && mapper.length > DigitConst.ZERO
-                && service.length > DigitConst.ZERO) {
+                && service.length > DigitConst.ZERO && mainService.length > DigitConst.ZERO &&
+                facade.length > DigitConst.ZERO && dto.length > DigitConst.ZERO) {
             if (controller[controller.length - DigitConst.ONE].equals(entity[entity.length - DigitConst.ONE]) &&
-                    entity[entity.length - DigitConst.ONE].equals(mapper[mapper.length - DigitConst.ONE]) && mapper[mapper.length - DigitConst.ONE]
-                    .equals(service[service.length - DigitConst.ONE])) {
+                    entity[entity.length - DigitConst.ONE].equals(mapper[mapper.length - DigitConst.ONE]) &&
+                    mapper[mapper.length - DigitConst.ONE].equals(service[service.length - DigitConst.ONE]) &&
+                    service[service.length - DigitConst.ONE].equals(mainService[mainService.length - DigitConst.ONE]) &&
+                    mainService[mainService.length - DigitConst.ONE].equals(facade[facade.length - DigitConst.ONE]) &&
+                    facade[facade.length - DigitConst.ONE].equals(dto[dto.length - DigitConst.ONE])) {
                 pc.setModuleName(controller[controller.length - DigitConst.ONE]);
             } else {
                 String[] split = codeDTO.getTableName().split("_");
@@ -198,40 +174,24 @@ public class CodeServiceImpl implements CodeService {
                 pc.setModuleName(moduleName);
             }
         }
-        pc.setService(codeDTO.getService().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
-        pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getServiceImpl());
+        pc.setService(codeDTO.getService().getPackageName());
+        pc.setServiceImpl(pc.getService() + pc.getServiceImpl());
 
-        pc.setMainService(codeDTO.getMainService().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
-        pc.setMainServiceImpl(pc.getMainService() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getMainServiceImpl());
+        pc.setMainService(codeDTO.getMainService().getPackageName());
+        pc.setMainServiceImpl(pc.getMainService() + pc.getMainServiceImpl());
 
-        pc.setFacade(codeDTO.getFacade().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
-        pc.setFacadeImpl(pc.getFacade() + StringPool.DOT + pc.getModuleName() + StringPool.DOT + pc.getFacadeImpl());
+        pc.setFacade(codeDTO.getFacade().getPackageName());
+        pc.setFacadeImpl(pc.getFacade() + pc.getFacadeImpl());
 
-        pc.setController(codeDTO.getController().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
+        pc.setController(codeDTO.getController().getPackageName());
 
-        pc.setMapper(codeDTO.getMapper().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
+        pc.setMapper(codeDTO.getMapper().getPackageName());
 
-        pc.setEntity(codeDTO.getEntity().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
+        pc.setEntity(codeDTO.getEntity().getPackageName());
 
-        pc.setReqDto(codeDTO.getDto().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
+        pc.setReqDto(codeDTO.getDto().getPackageName());
 
-        pc.setRespDto(codeDTO.getDto().getPackageName().
-                replaceAll(StringPool.DOT + pc.getModuleName(), "").
-                replaceAll(parent + StringPool.DOT, ""));
+        pc.setRespDto(codeDTO.getDto().getPackageName());
 
         mpg.setPackageInfo(pc);
 
