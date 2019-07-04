@@ -167,9 +167,15 @@ public class CodeServiceImpl implements CodeService {
             } else {
                 String[] split = codeDTO.getTableName().split("_");
                 String moduleName = "";
+                Integer count = 0;
                 //过滤表前缀
                 for (int i = DigitConst.ONE; i < split.length; i++) {
-                    moduleName += split[i];
+                    if (count != 0) {
+                        moduleName += upperCase(split[i]);
+                    } else {
+                        moduleName += split[i];
+                    }
+                    count++;
                 }
                 pc.setModuleName(moduleName);
             }
@@ -237,6 +243,19 @@ public class CodeServiceImpl implements CodeService {
 
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
+    }
+
+    /**
+     * Description: 将字符串首字母大写
+     *
+     * @param str 表名分割内容
+     * @return 首字母大写字符串
+     */
+    public String upperCase(String str) {
+        String lowerCase = str.toLowerCase();
+        char[] ch = lowerCase.toCharArray();
+        ch[0] = (char) (ch[0] - 32);
+        return new String(ch);
     }
 
 }
