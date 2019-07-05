@@ -91,10 +91,10 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
                 ReusParams.PACKAGE_CONTROLLER_NAME + caseName, PATH, true));
         //Facade层信息
         classAndPackageResp.setFacade(new FacadeEntity(upperCaseName + "Facade",
-                ReusParams.PACKAGE_FACADE_NAME, PATH, true));
+                ReusParams.PACKAGE_FACADE_NAME + caseName, PATH, true));
         //MainService层信息
         classAndPackageResp.setMainService(new MainServiceEntity(upperCaseName + "Service",
-                ReusParams.PACKAGE_MAIN_SERVICE_NAME, PATH, true));
+                ReusParams.PACKAGE_MAIN_SERVICE_NAME + caseName, PATH, true));
         return classAndPackageResp;
     }
 

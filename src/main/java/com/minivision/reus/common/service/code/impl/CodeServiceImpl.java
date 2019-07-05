@@ -181,13 +181,13 @@ public class CodeServiceImpl implements CodeService {
             }
         }
         pc.setService(codeDTO.getService().getPackageName());
-        pc.setServiceImpl(pc.getService() + pc.getServiceImpl());
+        pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getServiceImpl());
 
         pc.setMainService(codeDTO.getMainService().getPackageName());
-        pc.setMainServiceImpl(pc.getMainService() + pc.getMainServiceImpl());
+        pc.setMainServiceImpl(pc.getMainService() + StringPool.DOT + pc.getMainServiceImpl());
 
         pc.setFacade(codeDTO.getFacade().getPackageName());
-        pc.setFacadeImpl(pc.getFacade() + pc.getFacadeImpl());
+        pc.setFacadeImpl(pc.getFacade() + StringPool.DOT + pc.getFacadeImpl());
 
         pc.setController(codeDTO.getController().getPackageName());
 
