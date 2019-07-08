@@ -1,7 +1,6 @@
 package com.minivision.reus.common.service.code.impl;
 
 import com.minivision.common.framework.constant.DigitConst;
-import com.minivision.plus.core.exceptions.MybatisPlusException;
 import com.minivision.plus.core.toolkit.StringPool;
 import com.minivision.plus.generator.AutoGenerator;
 import com.minivision.plus.generator.InjectionConfig;
@@ -11,16 +10,19 @@ import com.minivision.plus.generator.config.GlobalConfig;
 import com.minivision.plus.generator.config.PackageConfig;
 import com.minivision.plus.generator.config.StrategyConfig;
 import com.minivision.plus.generator.config.TemplateConfig;
+import com.minivision.plus.generator.config.po.TableInfo;
 import com.minivision.plus.generator.config.rules.NamingStrategy;
 import com.minivision.plus.generator.engine.FreemarkerTemplateEngine;
 import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import com.minivision.reus.common.dto.database.DbType;
+import com.minivision.reus.common.exception.ReusException;
 import com.minivision.reus.common.service.code.CodeService;
 import com.minivision.reus.common.util.JsonUtil;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,12 +52,12 @@ public class CodeServiceImpl implements CodeService {
 
     private static final String JDBC = "jdbc:";
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir").replaceAll("\\\\", "\\/");
-
-    private static final String GENERATE_PATH = "/generate/zip/src/main/java/";
-
     @Override
     public String generate(CodeDTO codeDTO) {
+        File file = new File(codeDTO.getGenerateDirectory());
+        if (!file.exists()) {
+            throw new ReusException(ReusConstants.DIRECTORY_ERROR);
+        }
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -71,6 +73,14 @@ public class CodeServiceImpl implements CodeService {
         //配置模板
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setXml(null);
+        //配置是否生成
+        templateConfig.setControllerIsGenerator(codeDTO.getController().getIsGenerate());
+        templateConfig.setServiceIsGenerator(codeDTO.getService().getIsGenerate());
+        templateConfig.setFacadeIsGenerator(codeDTO.getFacade().getIsGenerate());
+        templateConfig.setMainServiceIsGenerator(codeDTO.getMainService().getIsGenerate());
+        templateConfig.setDtoIsGenerator(codeDTO.getDto().getIsGenerate());
+        templateConfig.setEntityIsGenerator(codeDTO.getEntity().getIsGenerate());
+        templateConfig.setMapperIsGenerator(codeDTO.getMapper().getIsGenerate());
         mpg.setTemplate(templateConfig);
 
         //自定义配置
@@ -79,16 +89,12 @@ public class CodeServiceImpl implements CodeService {
         // 策略配置
         setStrategyConfig(mpg, codeDTO);
 
-        //启动
-        Map<String, String> map = new HashMap<>();
-        String execute = null;
         try {
-            execute = mpg.execute();
-            map.put("path", execute);
+            mpg.execute();
         } catch (Exception e) {
-            return JsonUtil.getErrorJson(ReusConstants.SYS_ERROR);
+            throw new ReusException(ReusConstants.SYS_ERROR);
         }
-        return JsonUtil.getSucc(map, ReusConstants.OPER_SUCC);
+        return JsonUtil.getSucc(ReusConstants.OPER_SUCC);
     }
 
     private void setStrategyConfig(AutoGenerator mpg, CodeDTO codeDTO) {
@@ -112,8 +118,7 @@ public class CodeServiceImpl implements CodeService {
 
     private void setGlobalConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(PROJECT_PATH + GENERATE_PATH);
-        gc.setOpen(true);
+        gc.setOutputDir(codeDTO.getGenerateDirectory());
         gc.setAuthor("wcx");
         if (Objects.nonNull(codeDTO.getMapperName())) {
             gc.setMapperName(codeDTO.getMapperName());
@@ -234,9 +239,9 @@ public class CodeServiceImpl implements CodeService {
         // 自定义配置会被优先输出
         focList.add(new FileOutConfig(templatePath) {
             @Override
-            public String outputFile(com.minivision.plus.generator.config.po.TableInfo tableInfo) {
+            public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名
-                return PROJECT_PATH + GENERATE_PATH + "resources/mapper/" + pc.getModuleName() + "/"
+                return codeDTO.getGenerateDirectory() + "/resources/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

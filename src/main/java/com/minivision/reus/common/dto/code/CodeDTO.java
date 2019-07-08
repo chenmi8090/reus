@@ -31,6 +31,8 @@ public class CodeDTO implements Serializable {
 	@NotEmpty
 	private String encoding;
 
+	private String generateDirectory;
+
 	private String primaryKey = "id";
 
 	private ClassDTO controller;

@@ -64,4 +64,9 @@ public class ReusConstants {
      * 数据库执行错误
      */
     public static final String DATABASE_EXECUTE_ERROR = "90002";
+
+    /**
+     * 路径不存在
+     */
+    public static final String DIRECTORY_ERROR = "10009";
 }

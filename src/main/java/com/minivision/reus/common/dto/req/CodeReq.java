@@ -25,6 +25,9 @@ public class CodeReq implements Serializable {
     private DatabaseDTO dataSource;
 
     @NotEmpty
+    private String generateDirectory;
+
+    @NotEmpty
     private String tableName;
 
     @NotEmpty
