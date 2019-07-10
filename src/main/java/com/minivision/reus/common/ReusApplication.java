@@ -55,7 +55,7 @@ public class ReusApplication {
         try {
             confApp = SpringApplication.run(ReusApplication.class, args);
         } finally {
-            Runtime.getRuntime().exec("cmd /c start http://localhost:8099/reus");
+            Runtime.getRuntime().exec("cmd /c start http://localhost:8099/reus/#/login");
             close(confApp);
         }
     }
