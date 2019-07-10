@@ -44,7 +44,7 @@ public class PackageAndClassServiceImpl implements PackageAndClassService {
     /**
      * path
      */
-    private static final String PATH = "src/main/java";
+    private static final String PATH = "";
 
     /**
      * Mapper
