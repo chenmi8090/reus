@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="false" scan="true" scanPeriod="30 second">
 
-	<property name="PROJECT" value="iorder" />
-	<property name="ROOT" value="logs/${PROJECT}/" />
+	<property name="ROOT" value="/" />
 	<property name="FILESIZE" value="50MB" />
 	<property name="MAXHISTORY" value="100" />
 	<timestamp key="DATETIME" datePattern="yyyy-MM-dd HH:mm:ss" />

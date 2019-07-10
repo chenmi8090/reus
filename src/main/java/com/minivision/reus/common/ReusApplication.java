@@ -18,6 +18,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.io.IOException;
+
 /**
  * <Description> 后台启动类<br>
  *
@@ -26,11 +28,11 @@ import org.springframework.web.filter.CorsFilter;
  * @taskId <br>
  * @CreateDate 2018年4月11日 <br>
  */
-@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@SpringBootApplication(exclude = { DataSourceAutoConfiguration.class })
 //@MapperScan("com.minivision")
 @ComponentScan(basePackages = "com.minivision",
         excludeFilters = { @ComponentScan.Filter(type = FilterType.CUSTOM, value = { PackageExcludeFilter.class })
-})
+        })
 @EnableTransactionManagement
 @EnableAsync
 @RestController
@@ -48,12 +50,12 @@ public class ReusApplication {
      * @author QSS<br>
      * @taskId <br>
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ConfigurableApplicationContext confApp = null;
         try {
             confApp = SpringApplication.run(ReusApplication.class, args);
-
         } finally {
+            Runtime.getRuntime().exec("cmd /c start http://localhost:8099/reus");
             close(confApp);
         }
     }
@@ -100,9 +102,9 @@ public class ReusApplication {
     /**
      * Description: 支持跨域<br>
      *
+     * @return <br>
      * @author jiangzhenya<br>
      * @taskId <br>
-     * @return <br>
      */
     @Bean
     public CorsFilter corsFilter() {

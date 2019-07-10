@@ -22,7 +22,6 @@ public class IndexController {
 
     @RequestMapping("/")
     public String index() {
-        System.out.println("1111");
         return "forward:/index.html";
     }
 

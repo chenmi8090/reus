@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.minivision</groupId>
-    <artifactId>reus</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <dependencies>
+	<groupId>com.minivision</groupId>
+	<artifactId>reus</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<dependencies>
 
-        <dependency>
-            <groupId>com.minivision</groupId>
-            <artifactId>core</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.minivision</groupId>
+			<artifactId>core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.minivision</groupId>
-            <artifactId>generator</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.minivision</groupId>
+			<artifactId>generator</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>ch.qos.logback</groupId>
-                    <artifactId>logback-classic</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency> 
-               <groupId>com.alibaba.spring.boot</groupId> 
-               <artifactId>dubbo-spring-boot-starter</artifactId> 
-            <version>2.0.0</version> 
-        </dependency>
-        <dependency>
-            <groupId>com.101tec</groupId>
-            <artifactId>zkclient</artifactId>
-            <version>0.7</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>slf4j-api</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>log4j</artifactId>
-                    <groupId>log4j</groupId>
-                </exclusion>
-                <exclusion>
-                    <artifactId>slf4j-log4j12</artifactId>
-                    <groupId>org.slf4j</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>com.alibaba.spring.boot</groupId>
+			<artifactId>dubbo-spring-boot-starter</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.101tec</groupId>
+			<artifactId>zkclient</artifactId>
+			<version>0.7</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>slf4j-api</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>slf4j-log4j12</artifactId>
+					<groupId>org.slf4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
 
-        <!-- aop -->
+		<!-- aop -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
@@ -67,63 +67,63 @@
 
 		<!-- aop -->
 		<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
 
-        <!-- lombok -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
+		<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 
-        <!-- 日志log4j2 -->
-        <dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.3.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
-        </dependency>
+		<!-- 日志log4j2 -->
+		<dependency>
+			<groupId>com.lmax</groupId>
+			<artifactId>disruptor</artifactId>
+			<version>3.3.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
 
-        <!-- seal -->
-        <dependency>
-            <groupId>com.minivision</groupId>
-            <artifactId>seal-common-framework-all</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		<!-- seal -->
+		<dependency>
+			<groupId>com.minivision</groupId>
+			<artifactId>seal-common-framework-all</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.minivision</groupId>
-            <artifactId>seal-common-config-all</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.minivision</groupId>
+			<artifactId>seal-common-config-all</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>com.minivision</groupId>
-            <artifactId>seal-mybatis</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+		<dependency>
+			<groupId>com.minivision</groupId>
+			<artifactId>seal-mybatis</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 
-        <dependency>
-            <groupId>javax.persistence</groupId>
-            <artifactId>persistence-api</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.freemarker</groupId>
-            <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
-        </dependency>
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.28</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.mybatis.generator</groupId>
-            <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.6</version>
-        </dependency>
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.6</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.baomidou</groupId>
@@ -140,35 +140,35 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>1.5.2.RELEASE</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.5.2.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
-    <build>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.7.0</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF8</encoding>
-                </configuration>
-            </plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.7.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF8</encoding>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -181,19 +181,34 @@
 					</execution>
 				</executions>
 			</plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <excludes>
-                    <exclude>**/dev/**</exclude>
-                    <exclude>**/pro/**</exclude>
-                    <exclude>**/test/**</exclude>
-                    <exclude>**/pre/**</exclude>
-                    <exclude>**/gray/**</exclude>
-                    <exclude>**/zywl/**</exclude>
-                </excludes>
-            </resource>
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/dev/**</exclude>
+					<exclude>**/pro/**</exclude>
+					<exclude>**/test/**</exclude>
+					<exclude>**/pre/**</exclude>
+					<exclude>**/gray/**</exclude>
+					<exclude>**/zywl/**</exclude>
+				</excludes>
+			</resource>
+
+			<resource>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+				<filtering>true</filtering>
+			</resource>
 
 			<resource>
 				<directory>src/main/resources/${profile.path}</directory>
@@ -217,45 +232,45 @@
 		</snapshotRepository>
 	</distributionManagement>
 
-    <profiles>
-        <profile>
-            <id>dev</id>
-            <properties>
-                <profile.path>config/dev</profile.path>
-            </properties>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-        </profile>
-        <profile>
-            <id>pro</id>
-            <properties>
-                <profile.path>config/pro</profile.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <profile.path>config/test</profile.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>pre</id>
-            <properties>
-                <profile.path>config/pre</profile.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>gray</id>
-            <properties>
-                <profile.path>config/gray</profile.path>
-            </properties>
-        </profile>
-        <profile>
-            <id>zywl</id>
-            <properties>
-                <profile.path>config/zywl</profile.path>
-            </properties>
-        </profile>
-    </profiles>
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<profile.path>config/dev</profile.path>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>pro</id>
+			<properties>
+				<profile.path>config/pro</profile.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profile.path>config/test</profile.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>pre</id>
+			<properties>
+				<profile.path>config/pre</profile.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>gray</id>
+			<properties>
+				<profile.path>config/gray</profile.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>zywl</id>
+			<properties>
+				<profile.path>config/zywl</profile.path>
+			</properties>
+		</profile>
+	</profiles>
 </project>
