@@ -22,6 +22,7 @@ public class ClassDTO {
     @NotEmpty
     private String packageName;
 
+    @NotEmpty
     private String path;
 
     private Boolean isGenerate;

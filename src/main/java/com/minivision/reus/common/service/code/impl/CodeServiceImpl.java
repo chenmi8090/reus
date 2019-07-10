@@ -20,9 +20,9 @@ import com.minivision.reus.common.dto.database.DbType;
 import com.minivision.reus.common.exception.ReusException;
 import com.minivision.reus.common.service.code.CodeService;
 import com.minivision.reus.common.util.JsonUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,10 +54,6 @@ public class CodeServiceImpl implements CodeService {
 
     @Override
     public String generate(CodeDTO codeDTO) {
-        File file = new File(codeDTO.getGenerateDirectory());
-        if (!file.exists()) {
-            throw new ReusException(ReusConstants.DIRECTORY_ERROR);
-        }
         // 代码生成器
         AutoGenerator mpg = new AutoGenerator();
 
@@ -118,33 +114,78 @@ public class CodeServiceImpl implements CodeService {
 
     private void setGlobalConfig(AutoGenerator mpg, CodeDTO codeDTO) {
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(codeDTO.getGenerateDirectory());
-        gc.setAuthor("wcx");
+        gc.setAuthor(codeDTO.getAuthor());
+        Map<String, String> outPutDirs = new HashMap<>();
         if (Objects.nonNull(codeDTO.getMapperName())) {
+            // 判断路径是否存在
+            if (StringUtils.isNotEmpty(codeDTO.getXmlPath())) {
+                // 获取xml文件路径
+                outPutDirs.put("xml", codeDTO.getXmlPath());
+            }
             gc.setMapperName(codeDTO.getMapperName());
         }
         if (Objects.nonNull(codeDTO.getController().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getController()) && StringUtils.isNotEmpty(codeDTO.getController().getPath())) {
+                // 获取controller类路径
+                outPutDirs.put("controller", codeDTO.getController().getPath());
+            }
             gc.setControllerName(codeDTO.getController().getName());
         }
         if (Objects.nonNull(codeDTO.getService().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getService()) && StringUtils.isNotEmpty(codeDTO.getService().getPath())) {
+                // 获取service类路径
+                outPutDirs.put("service", codeDTO.getService().getPath());
+            }
             gc.setServiceName(codeDTO.getService().getName());
             gc.setServiceImplName(codeDTO.getService().getName() + IMPL_KEY);
         }
         if (Objects.nonNull(codeDTO.getMapper().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getMapper()) && StringUtils.isNotEmpty(codeDTO.getMapper().getPath())) {
+                // 获取controller类路径
+                outPutDirs.put("mapper", codeDTO.getMapper().getPath());
+            }
             gc.setMapperName(codeDTO.getMapper().getName());
         }
         if (Objects.nonNull(codeDTO.getEntity().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getEntity()) && StringUtils.isNotEmpty(codeDTO.getEntity().getPath())) {
+                // 获取entity类路径
+                outPutDirs.put("entity", codeDTO.getEntity().getPath());
+            }
             gc.setEntityName(codeDTO.getEntity().getName());
         }
         if (Objects.nonNull(codeDTO.getFacade().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getFacade()) && StringUtils.isNotEmpty(codeDTO.getFacade().getPath())) {
+                // 获取facade类路径
+                outPutDirs.put("facade", codeDTO.getFacade().getPath());
+            }
             gc.setFacadeName(codeDTO.getFacade().getName());
             gc.setFacadeImplName(codeDTO.getFacade().getName() + IMPL_KEY);
         }
         if (Objects.nonNull(codeDTO.getMainService().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getMainService()) && StringUtils.isNotEmpty(codeDTO.getMainService().getPath())) {
+                // 获取facade类路径
+                outPutDirs.put("mainService", codeDTO.getMainService().getPath());
+            }
             gc.setMainServiceName(codeDTO.getMainService().getName());
             gc.setMainServiceImplName(codeDTO.getMainService().getName() + IMPL_KEY);
         }
-
+        if (Objects.nonNull(codeDTO.getDto().getName())) {
+            // 判断路径是否存在
+            if (Objects.nonNull(codeDTO.getDto()) && StringUtils.isNotEmpty(codeDTO.getDto().getPath())) {
+                // 获取facade类路径
+                outPutDirs.put("dto", codeDTO.getDto().getPath());
+            }
+            gc.setReqDtoName(codeDTO.getDto().getName().replaceAll("DTO", "ReqDTO"));
+            gc.setRespDtoName(codeDTO.getDto().getName().replaceAll("DTO", "RespDTO"));
+        }
+        // 为当前参数赋值
+        gc.setOutPutDirs(outPutDirs);
         mpg.setGlobalConfig(gc);
     }
 
@@ -241,7 +282,7 @@ public class CodeServiceImpl implements CodeService {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名
-                return codeDTO.getGenerateDirectory() + "/resources/mapper/" + pc.getModuleName() + "/"
+                return codeDTO.getXmlPath() + "/resources/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });

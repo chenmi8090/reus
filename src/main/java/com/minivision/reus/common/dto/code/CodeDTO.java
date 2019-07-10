@@ -53,5 +53,9 @@ public class CodeDTO implements Serializable {
 
 	private String mapperName;
 
+	private String author;
+
+	private String xmlPath;
+
 
 }

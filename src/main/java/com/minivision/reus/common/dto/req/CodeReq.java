@@ -25,9 +25,6 @@ public class CodeReq implements Serializable {
     private DatabaseDTO dataSource;
 
     @NotEmpty
-    private String generateDirectory;
-
-    @NotEmpty
     private String tableName;
 
     @NotEmpty
@@ -54,8 +51,14 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO mapper;
 
-    @NotNull
+    @NotEmpty
+    private String xmlPath;
+
+    @NotEmpty
     private String mapperName;
+
+    @NotEmpty
+    private String author;
 
     private String primaryKey = "id";
 }
