@@ -24,10 +24,8 @@ public class CodeReq implements Serializable {
     @NotNull
     private DatabaseDTO dataSource;
 
-    @NotEmpty
     private String tableName;
 
-    @NotEmpty
     private String encoding;
 
     @NotNull
@@ -45,7 +43,6 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO facade;
 
-    @NotEmpty
     private String facadeImplPath;
 
     @NotNull
@@ -54,13 +51,11 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO mapper;
 
-    @NotEmpty
     private String xmlPath;
 
     @NotEmpty
     private String mapperName;
 
-    @NotEmpty
     private String author;
 
     private String primaryKey = "id";

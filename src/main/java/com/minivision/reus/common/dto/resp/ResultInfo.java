@@ -3,6 +3,10 @@
  ****************************************************************************************/
 package com.minivision.reus.common.dto.resp;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +20,9 @@ import java.util.List;
  * @taskId <br>
  * @CreateDate 2016年11月23日 <br>
  */
-
+@Getter
+@Setter
+@ToString
 public class ResultInfo<E> {
 
     /**
@@ -100,60 +106,6 @@ public class ResultInfo<E> {
         super();
         this.code = result;
         this.msg = Collections.singletonList(rtnMsg);
-        this.data = data;
-    }
-
-    /**
-     * get code
-     * 
-     * @return Returns the code.<br>
-     */
-    public int getCode() {
-        return code;
-    }
-
-    /**
-     * set code
-     * 
-     * @param code The code to set. <br>
-     */
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    /**
-     * get msg
-     * 
-     * @return Returns the msg.<br>
-     */
-    public List<RtnMessage> getMsg() {
-        return msg;
-    }
-
-    /**
-     * set msg
-     * 
-     * @param msg The msg to set. <br>
-     */
-    public void setMsg(List<RtnMessage> msg) {
-        this.msg = msg;
-    }
-
-    /**
-     * get data
-     * 
-     * @return Returns the data.<br>
-     */
-    public E getData() {
-        return data;
-    }
-
-    /**
-     * set data
-     * 
-     * @param data The data to set. <br>
-     */
-    public void setData(E data) {
         this.data = data;
     }
 

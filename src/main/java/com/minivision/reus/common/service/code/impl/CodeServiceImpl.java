@@ -1,6 +1,7 @@
 package com.minivision.reus.common.service.code.impl;
 
 import com.minivision.common.framework.constant.DigitConst;
+import com.minivision.common.framework.facade.exception.BusinessException;
 import com.minivision.plus.core.toolkit.StringPool;
 import com.minivision.plus.generator.AutoGenerator;
 import com.minivision.plus.generator.InjectionConfig;
@@ -17,7 +18,6 @@ import com.minivision.reus.common.constants.ReusConstants;
 import com.minivision.reus.common.dto.code.CodeDTO;
 import com.minivision.reus.common.dto.database.DatabaseDTO;
 import com.minivision.reus.common.dto.database.DbType;
-import com.minivision.reus.common.exception.ReusException;
 import com.minivision.reus.common.service.code.CodeService;
 import com.minivision.reus.common.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -70,13 +70,35 @@ public class CodeServiceImpl implements CodeService {
         TemplateConfig templateConfig = new TemplateConfig();
         templateConfig.setXml(null);
         //配置是否生成
-        templateConfig.setControllerIsGenerator(codeDTO.getController().getIsGenerate());
-        templateConfig.setServiceIsGenerator(codeDTO.getService().getIsGenerate());
-        templateConfig.setFacadeIsGenerator(codeDTO.getFacade().getIsGenerate());
-        templateConfig.setMainServiceIsGenerator(codeDTO.getMainService().getIsGenerate());
-        templateConfig.setDtoIsGenerator(codeDTO.getDto().getIsGenerate());
-        templateConfig.setEntityIsGenerator(codeDTO.getEntity().getIsGenerate());
-        templateConfig.setMapperIsGenerator(codeDTO.getMapper().getIsGenerate());
+        Boolean isGenerateController = codeDTO.getController().getIsGenerate();
+        Boolean isGenerateService = codeDTO.getService().getIsGenerate();
+        Boolean isGenerateFacade = codeDTO.getFacade().getIsGenerate();
+        Boolean isGenerateMainService = codeDTO.getMainService().getIsGenerate();
+        Boolean isGenerateDTO = codeDTO.getDto().getIsGenerate();
+        Boolean isGenerateEntity = codeDTO.getEntity().getIsGenerate();
+        Boolean isGenerateMapper = codeDTO.getMapper().getIsGenerate();
+        if (isGenerateController || isGenerateService || isGenerateFacade || isGenerateMainService || isGenerateEntity
+                || isGenerateDTO || isGenerateMapper) {
+            if (StringUtils.isEmpty(codeDTO.getController().getPath())
+                    || StringUtils.isEmpty(codeDTO.getService().getPath())
+                    || StringUtils.isEmpty(codeDTO.getFacade().getPath())
+                    || StringUtils.isEmpty(codeDTO.getMainService().getPath())
+                    || StringUtils.isEmpty(codeDTO.getDto().getPath())
+                    || StringUtils.isEmpty(codeDTO.getEntity().getPath())
+                    || StringUtils.isEmpty(codeDTO.getMapper().getPath())) {
+                return JsonUtil.getErrorJson(ReusConstants.GENERATE_URL_IS_NOT_EMPTY);
+            }
+        } else if (!isGenerateController && !isGenerateService && !isGenerateFacade && !isGenerateMainService && !isGenerateEntity
+                && !isGenerateDTO && !isGenerateMapper) {
+            return JsonUtil.getErrorJson(ReusConstants.LESS_GENERATE_CODE);
+        }
+        templateConfig.setControllerIsGenerator(isGenerateController);
+        templateConfig.setServiceIsGenerator(isGenerateService);
+        templateConfig.setFacadeIsGenerator(isGenerateFacade);
+        templateConfig.setMainServiceIsGenerator(isGenerateMainService);
+        templateConfig.setDtoIsGenerator(isGenerateDTO);
+        templateConfig.setEntityIsGenerator(isGenerateEntity);
+        templateConfig.setMapperIsGenerator(isGenerateMapper);
         mpg.setTemplate(templateConfig);
 
         //自定义配置
@@ -88,7 +110,7 @@ public class CodeServiceImpl implements CodeService {
         try {
             mpg.execute();
         } catch (Exception e) {
-            throw new ReusException(ReusConstants.SYS_ERROR);
+            return JsonUtil.getError(ReusConstants.GENERATE_CODE_ERROR);
         }
         return JsonUtil.getSucc(ReusConstants.OPER_SUCC);
     }
@@ -165,7 +187,7 @@ public class CodeServiceImpl implements CodeService {
             }
             gc.setFacadeName(codeDTO.getFacade().getName());
         }
-        if(Objects.nonNull(codeDTO.getFacadeImplPath())){
+        if (Objects.nonNull(codeDTO.getFacadeImplPath())) {
             // 判断路径是否存在
             if (StringUtils.isNotEmpty(codeDTO.getFacadeImplPath())) {
                 // 获取facade类路径

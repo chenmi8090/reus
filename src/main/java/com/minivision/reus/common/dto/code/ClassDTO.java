@@ -1,6 +1,5 @@
 package com.minivision.reus.common.dto.code;
 
-import com.minivision.common.framework.validation.annotation.NotEmpty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,13 +15,10 @@ import lombok.Setter;
 @Getter
 public class ClassDTO {
 
-    @NotEmpty
     private String name;
 
-    @NotEmpty
     private String packageName;
 
-    @NotEmpty
     private String path;
 
     private Boolean isGenerate;

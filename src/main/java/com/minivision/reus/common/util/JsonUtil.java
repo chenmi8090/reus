@@ -124,6 +124,19 @@ public class JsonUtil {
     }
 
     /**
+     * Description: 返回正确信息，有正确码<br>
+     *
+     * @param messageCode 编码
+     * @return <br>
+     * @author qss<br>
+     * @taskId <br>
+     */
+    public static String getError(String messageCode) {
+        return JSONObject.toJSONString(new ResultInfo<Object>(ParamConst.RESULT_ERROR, new RtnMessage(messageCode)), propertyFilter,
+                SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullStringAsEmpty, SerializerFeature.WriteNullListAsEmpty);
+    }
+
+    /**
      * Description: 返回正确信息，有正确码,带占位符信息<br>
      *
      * @param obj         返回信息

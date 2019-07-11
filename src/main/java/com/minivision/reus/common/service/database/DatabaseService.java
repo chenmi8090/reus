@@ -14,5 +14,5 @@ import java.util.List;
  * @CreateDate 2018年11月30日 <br>
  */
 public interface DatabaseService {
-    ServiceResp<List<String>> connect(DatabaseDTO request);
+    String connect(DatabaseDTO request);
 }

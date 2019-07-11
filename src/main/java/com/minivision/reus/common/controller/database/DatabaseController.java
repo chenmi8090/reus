@@ -36,6 +36,6 @@ public class DatabaseController {
             return JsonUtil.getErrorJson(ReusConstants.PARAM_EXCEPTION);
         }
 
-        return JsonUtil.getSucc4data(databaseService.connect(request).getData());
+        return databaseService.connect(request);
     }
 }
