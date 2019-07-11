@@ -45,6 +45,9 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO facade;
 
+    @NotEmpty
+    private String facadeImplPath;
+
     @NotNull
     private ClassDTO entity;
 

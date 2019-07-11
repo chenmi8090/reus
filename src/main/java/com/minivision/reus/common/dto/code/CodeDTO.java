@@ -20,42 +20,43 @@ import java.io.Serializable;
 @Getter
 public class CodeDTO implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5868157075370413384L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5868157075370413384L;
 
-	@NotEmpty
-	private String tableName;
+    @NotEmpty
+    private String tableName;
 
-	@NotEmpty
-	private String encoding;
+    @NotEmpty
+    private String encoding;
 
-	private String generateDirectory;
+    private String generateDirectory;
 
-	private String primaryKey = "id";
+    private String primaryKey = "id";
 
-	private ClassDTO controller;
+    private ClassDTO controller;
 
-	private ClassDTO service;
+    private ClassDTO service;
 
-	private ClassDTO dto;
+    private ClassDTO dto;
 
-	private ClassDTO mainService;
+    private ClassDTO mainService;
 
-	private ClassDTO facade;
+    private ClassDTO facade;
 
-	private ClassDTO entity;
+    private String facadeImplPath;
 
-	private ClassDTO mapper;
+    private ClassDTO entity;
+
+    private ClassDTO mapper;
 
     private DatabaseDTO dataSource;
 
-	private String mapperName;
+    private String mapperName;
 
-	private String author;
+    private String author;
 
-	private String xmlPath;
-
+    private String xmlPath;
 
 }

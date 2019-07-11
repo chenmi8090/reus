@@ -164,6 +164,13 @@ public class CodeServiceImpl implements CodeService {
                 outPutDirs.put("facade", codeDTO.getFacade().getPath());
             }
             gc.setFacadeName(codeDTO.getFacade().getName());
+        }
+        if(Objects.nonNull(codeDTO.getFacadeImplPath())){
+            // 判断路径是否存在
+            if (StringUtils.isNotEmpty(codeDTO.getFacadeImplPath())) {
+                // 获取facade类路径
+                outPutDirs.put("facadeImpl", codeDTO.getFacadeImplPath());
+            }
             gc.setFacadeImplName(codeDTO.getFacade().getName() + IMPL_KEY);
         }
         if (Objects.nonNull(codeDTO.getMainService().getName())) {
@@ -230,10 +237,12 @@ public class CodeServiceImpl implements CodeService {
         pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getServiceImpl());
 
         pc.setMainService(codeDTO.getMainService().getPackageName());
+
         pc.setMainServiceImpl(pc.getMainService() + StringPool.DOT + pc.getMainServiceImpl());
 
         pc.setFacade(codeDTO.getFacade().getPackageName());
-        pc.setFacadeImpl(pc.getFacade() + StringPool.DOT + pc.getFacadeImpl());
+
+        pc.setFacadeImpl(codeDTO.getFacade().getPackageName() + StringPool.DOT + pc.getFacadeImpl());
 
         pc.setController(codeDTO.getController().getPackageName());
 
@@ -282,7 +291,7 @@ public class CodeServiceImpl implements CodeService {
             @Override
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名
-                return codeDTO.getXmlPath() + "/resources/mapper/" + pc.getModuleName() + "/"
+                return codeDTO.getXmlPath() + "/mapper/" + pc.getModuleName() + "/"
                         + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
             }
         });
