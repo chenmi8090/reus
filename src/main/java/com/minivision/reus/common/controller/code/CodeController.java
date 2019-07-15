@@ -40,7 +40,7 @@ import javax.annotation.Resource;
 @Slf4j
 @CrossOrigin
 @RequestMapping("/code")
-@Api(value = "/code" , tags = "代码生成器")
+@Api(value = "/code", tags = "代码生成器")
 public class CodeController {
 
     @Autowired
@@ -52,13 +52,13 @@ public class CodeController {
     @Autowired
     private DirectoryService directoryService;
 
-    @RequestMapping(value = "/generate" , method = RequestMethod.POST)
-    @ApiOperation(notes = "代码生成" , value = "代码生成" , produces = "application/json")
+    @RequestMapping(value = "/generate", method = RequestMethod.POST)
+    @ApiOperation(notes = "代码生成", value = "代码生成", produces = "application/json")
     public String generate(@RequestBody CodeReq req) {
         try {
             ValidateUtil.validate(req);
         } catch (ValidateException e) {
-            log.error("generate fail with business, param : {}, exception : {}" , req, e);
+            log.error("generate fail with business, param : {}, exception : {}", req, e);
             throw new ReusException(ReusConstants.PARAM_EXCEPTION);
         }
         CodeDTO dto = new CodeDTO();
@@ -67,22 +67,22 @@ public class CodeController {
     }
 
     @RequestMapping("/getPackageAndClass")
-    @ApiOperation(notes = "根据表名获取包名类名" , value = "代码生成" , produces = "application/json")
+    @ApiOperation(notes = "根据表名获取包名类名", value = "代码生成", produces = "application/json")
     public String getPackageAndClass(@RequestBody GetTableNameReq getTableNameReq) {
         ClassAndPackageResp classAndPackageResp = packageAndClassService.getPackageAndClassByTableName(getTableNameReq.getTableName());
         return JsonUtil.getSucc4Date(classAndPackageResp);
     }
 
     @RequestMapping("/getDirectory")
-    public String getDirectory(@RequestBody GetDirectoryReq req){
+    public String getDirectory(@RequestBody GetDirectoryReq req) {
         try {
             ValidateUtil.validate(req);
         } catch (ValidateException e) {
-            log.error("generate fail with business, param : {}, exception : {}" , req, e);
+            log.error("generate fail with business, param : {}, exception : {}", req, e);
             throw new ReusException(ReusConstants.PARAM_EXCEPTION);
         }
         GetDirectoryDTO dto = new GetDirectoryDTO();
-        BeanUtils.copyProperties(req,dto);
+        BeanUtils.copyProperties(req, dto);
         return JsonUtil.getSucc4Date(directoryService.getDirectory(dto));
     }
 
