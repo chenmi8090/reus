@@ -77,20 +77,28 @@ public class CodeServiceImpl implements CodeService {
         Boolean isGenerateDTO = codeDTO.getDto().getIsGenerate();
         Boolean isGenerateEntity = codeDTO.getEntity().getIsGenerate();
         Boolean isGenerateMapper = codeDTO.getMapper().getIsGenerate();
-        if (isGenerateController || isGenerateService || isGenerateFacade || isGenerateMainService || isGenerateEntity
-                || isGenerateDTO || isGenerateMapper) {
-            if (StringUtils.isEmpty(codeDTO.getController().getPath())
-                    || StringUtils.isEmpty(codeDTO.getService().getPath())
-                    || StringUtils.isEmpty(codeDTO.getFacade().getPath())
-                    || StringUtils.isEmpty(codeDTO.getMainService().getPath())
-                    || StringUtils.isEmpty(codeDTO.getDto().getPath())
-                    || StringUtils.isEmpty(codeDTO.getEntity().getPath())
-                    || StringUtils.isEmpty(codeDTO.getMapper().getPath())) {
-                return JsonUtil.getErrorJson(ReusConstants.GENERATE_URL_IS_NOT_EMPTY);
-            }
-        } else if (!isGenerateController && !isGenerateService && !isGenerateFacade && !isGenerateMainService && !isGenerateEntity
-                && !isGenerateDTO && !isGenerateMapper) {
-            return JsonUtil.getErrorJson(ReusConstants.LESS_GENERATE_CODE);
+        if (!isGenerateController && StringUtils.isNotEmpty(codeDTO.getController().getPath())) {
+            codeDTO.getController().setPath(null);
+        }
+        if (!isGenerateService && StringUtils.isNotEmpty(codeDTO.getService().getPath())) {
+            codeDTO.getService().setPath(null);
+        }
+        if (!isGenerateFacade && StringUtils.isNotEmpty(codeDTO.getFacade().getPath())) {
+            codeDTO.getFacade().setPath(null);
+            codeDTO.setFacadeImplPath(null);
+        }
+        if (!isGenerateMainService && StringUtils.isNotEmpty(codeDTO.getMainService().getPath())) {
+            codeDTO.getMainService().setPath(null);
+        }
+        if (!isGenerateDTO && StringUtils.isNotEmpty(codeDTO.getDto().getPath())) {
+            codeDTO.getDto().setPath(null);
+        }
+        if (!isGenerateEntity && StringUtils.isNotEmpty(codeDTO.getEntity().getPath())) {
+            codeDTO.getEntity().setPath(null);
+        }
+        if (!isGenerateMapper && StringUtils.isNotEmpty(codeDTO.getMapper().getPath())) {
+            codeDTO.getMapper().setPath(null);
+            codeDTO.setXmlPath(null);
         }
         templateConfig.setControllerIsGenerator(isGenerateController);
         templateConfig.setServiceIsGenerator(isGenerateService);
