@@ -61,6 +61,9 @@ public class CodeController {
             log.error("generate fail with business, param : {}, exception : {}", req, e);
             throw new ReusException(ReusConstants.PARAM_EXCEPTION);
         }
+        if (req.getTableName().equals("t_xxx")) {
+            return JsonUtil.getError(ReusConstants.CHOOSE_ERROR_TABLE);
+        }
         CodeDTO dto = new CodeDTO();
         BeanUtils.copyProperties(req, dto);
         return codeService.generate(dto);

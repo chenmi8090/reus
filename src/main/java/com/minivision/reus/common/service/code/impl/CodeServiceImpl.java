@@ -123,6 +123,8 @@ public class CodeServiceImpl implements CodeService {
 
         try {
             mpg.execute();
+        } catch (BusinessException e) {
+            return JsonUtil.getError(e.getCode());
         } catch (Exception e) {
             return JsonUtil.getError(ReusConstants.GENERATE_CODE_ERROR);
         }

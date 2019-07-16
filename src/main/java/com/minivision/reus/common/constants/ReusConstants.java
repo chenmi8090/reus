@@ -71,6 +71,11 @@ public class ReusConstants {
     public static final String DATABASE_DATA_ERROR = "90003";
 
     /**
+     * 选择正确的表
+     */
+    public static final String CHOOSE_ERROR_TABLE = "90004";
+
+    /**
      * 代码生成失败
      */
     public static final String GENERATE_CODE_ERROR = "90005";
