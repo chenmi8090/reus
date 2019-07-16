@@ -77,6 +77,7 @@ public class CodeServiceImpl implements CodeService {
         Boolean isGenerateDTO = codeDTO.getDto().getIsGenerate();
         Boolean isGenerateEntity = codeDTO.getEntity().getIsGenerate();
         Boolean isGenerateMapper = codeDTO.getMapper().getIsGenerate();
+        // 再次校验是否生成文件
         if (!isGenerateController && StringUtils.isNotEmpty(codeDTO.getController().getPath())) {
             codeDTO.getController().setPath(null);
         }
@@ -99,6 +100,11 @@ public class CodeServiceImpl implements CodeService {
         if (!isGenerateMapper && StringUtils.isNotEmpty(codeDTO.getMapper().getPath())) {
             codeDTO.getMapper().setPath(null);
             codeDTO.setXmlPath(null);
+        }
+        // 最少选择一样进行生成
+        if(!isGenerateController && !isGenerateService && !isGenerateFacade && !isGenerateMainService
+                && !isGenerateDTO && !isGenerateEntity && !isGenerateMapper) {
+            return JsonUtil.getError(ReusConstants.LESS_GENERATE_CODE);
         }
         templateConfig.setControllerIsGenerator(isGenerateController);
         templateConfig.setServiceIsGenerator(isGenerateService);

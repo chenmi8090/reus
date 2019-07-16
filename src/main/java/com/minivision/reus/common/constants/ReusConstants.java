@@ -71,11 +71,6 @@ public class ReusConstants {
     public static final String DATABASE_DATA_ERROR = "90003";
 
     /**
-     * 生成文件路径不能为空
-     */
-    public static final String GENERATE_URL_IS_NOT_EMPTY = "90004";
-
-    /**
      * 代码生成失败
      */
     public static final String GENERATE_CODE_ERROR = "90005";
