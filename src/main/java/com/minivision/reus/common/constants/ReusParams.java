@@ -70,36 +70,36 @@ public class ReusParams {
     /**
      * DTO类型包名
      */
-    public static final String PACKAGE_DTO_NAME = "com.minivision.sms.api.domain.dto.";
+    public static final String PACKAGE_DTO_NAME = "api.domain.dto.";
 
     /**
      * Facade类型包名
      */
-    public static final String PACKAGE_FACADE_NAME = "com.minivision.sms.api.domain.facade.";
+    public static final String PACKAGE_FACADE_NAME = "api.domain.facade.";
 
     /**
      * Mapper类型包名
      */
-    public static final String PACKAGE_MAPPER_NAME = "com.minivision.sms.main.domain.mapper.";
+    public static final String PACKAGE_MAPPER_NAME = "main.domain.mapper.";
 
     /**
      * Entity类型包名
      */
-    public static final String PACKAGE_ENTITY_NAME = "com.minivision.sms.main.domain.entity.";
+    public static final String PACKAGE_ENTITY_NAME = "main.domain.entity.";
 
     /**
      * Service类型包名
      */
-    public static final String PACKAGE_SERVICE_NAME = "com.minivision.sms.agw.gateway.service.";
+    public static final String PACKAGE_SERVICE_NAME = "agw.gateway.service.";
 
     /**
      * Controller类型包名
      */
-    public static final String PACKAGE_CONTROLLER_NAME = "com.minivision.sms.agw.gateway.controller.";
+    public static final String PACKAGE_CONTROLLER_NAME = "agw.gateway.controller.";
 
     /**
      * mainService类型包名
      */
-    public static final String PACKAGE_MAIN_SERVICE_NAME = "com.minivision.sms.main.domain.service.";
+    public static final String PACKAGE_MAIN_SERVICE_NAME = "main.domain.service.";
 
 }
