@@ -238,13 +238,20 @@ public class CodeServiceImpl implements CodeService {
         PackageConfig pc = new PackageConfig();
         pc.setParent("");
 
-        String[] controller = codeDTO.getController().getPackageName().split(DOT);
-        String[] entity = codeDTO.getEntity().getPackageName().split(DOT);
-        String[] mapper = codeDTO.getMapper().getPackageName().split(DOT);
-        String[] service = codeDTO.getService().getPackageName().split(DOT);
-        String[] mainService = codeDTO.getMainService().getPackageName().split(DOT);
-        String[] facade = codeDTO.getFacade().getPackageName().split(DOT);
-        String[] dto = codeDTO.getDto().getPackageName().split(DOT);
+        String controllerPackage = codeDTO.getParentPackageName() + codeDTO.getController().getPackageName();
+        String[] controller = controllerPackage.split(DOT);
+        String entityPackage = codeDTO.getParentPackageName() + codeDTO.getEntity().getPackageName();
+        String[] entity = entityPackage.split(DOT);
+        String mapperPackage = codeDTO.getParentPackageName() + codeDTO.getMapper().getPackageName();
+        String[] mapper = mapperPackage.split(DOT);
+        String servicePackage = codeDTO.getParentPackageName() + codeDTO.getService().getPackageName();
+        String[] service = servicePackage.split(DOT);
+        String mainServicePackage = codeDTO.getParentPackageName() + codeDTO.getMainService().getPackageName();
+        String[] mainService = mainServicePackage.split(DOT);
+        String facadePackage = codeDTO.getParentPackageName() + codeDTO.getFacade().getPackageName();
+        String[] facade = facadePackage.split(DOT);
+        String dtoPackage = codeDTO.getParentPackageName() + codeDTO.getDto().getPackageName();
+        String[] dto = dtoPackage.split(DOT);
         if (controller.length > DigitConst.ZERO && entity.length > DigitConst.ZERO && mapper.length > DigitConst.ZERO
                 && service.length > DigitConst.ZERO && mainService.length > DigitConst.ZERO &&
                 facade.length > DigitConst.ZERO && dto.length > DigitConst.ZERO) {
@@ -271,26 +278,26 @@ public class CodeServiceImpl implements CodeService {
                 pc.setModuleName(moduleName);
             }
         }
-        pc.setService(codeDTO.getService().getPackageName());
+        pc.setService(servicePackage);
         pc.setServiceImpl(pc.getService() + StringPool.DOT + pc.getServiceImpl());
 
-        pc.setMainService(codeDTO.getMainService().getPackageName());
+        pc.setMainService(mainServicePackage);
 
         pc.setMainServiceImpl(pc.getMainService() + StringPool.DOT + pc.getMainServiceImpl());
 
-        pc.setFacade(codeDTO.getFacade().getPackageName());
+        pc.setFacade(facadePackage);
 
-        pc.setFacadeImpl(codeDTO.getFacade().getPackageName() + StringPool.DOT + pc.getFacadeImpl());
+        pc.setFacadeImpl(codeDTO.getParentPackageName() + codeDTO.getFacade().getPackageName() + StringPool.DOT + pc.getFacadeImpl());
 
-        pc.setController(codeDTO.getController().getPackageName());
+        pc.setController(controllerPackage);
 
-        pc.setMapper(codeDTO.getMapper().getPackageName());
+        pc.setMapper(mapperPackage);
 
-        pc.setEntity(codeDTO.getEntity().getPackageName());
+        pc.setEntity(entityPackage);
 
-        pc.setReqDto(codeDTO.getDto().getPackageName());
+        pc.setReqDto(dtoPackage);
 
-        pc.setRespDto(codeDTO.getDto().getPackageName());
+        pc.setRespDto(dtoPackage);
 
         mpg.setPackageInfo(pc);
 

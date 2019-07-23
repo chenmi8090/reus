@@ -28,6 +28,8 @@ public class CodeDTO implements Serializable {
     @NotEmpty
     private String tableName;
 
+    private String parentPackageName;
+
     @NotEmpty
     private String encoding;
 

@@ -21,12 +21,28 @@ import java.io.Serializable;
 @Data
 public class CodeReq implements Serializable {
 
-    @NotNull
-    private DatabaseDTO dataSource;
+    private String facadeImplPath;
 
-    private String tableName;
+    private String primaryKey = "id";
 
     private String encoding;
+
+    private String xmlPath;
+
+    @NotEmpty
+    private String tableName;
+
+    @NotEmpty
+    private String author;
+
+    @NotEmpty
+    private String parentPackageName;
+
+    @NotEmpty
+    private String mapperName;
+
+    @NotNull
+    private DatabaseDTO dataSource;
 
     @NotNull
     private ClassDTO controller;
@@ -43,20 +59,10 @@ public class CodeReq implements Serializable {
     @NotNull
     private ClassDTO facade;
 
-    private String facadeImplPath;
-
     @NotNull
     private ClassDTO entity;
 
     @NotNull
     private ClassDTO mapper;
 
-    private String xmlPath;
-
-    @NotEmpty
-    private String mapperName;
-
-    private String author;
-
-    private String primaryKey = "id";
 }
