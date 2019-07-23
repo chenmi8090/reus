@@ -337,7 +337,7 @@ public class CodeServiceImpl implements CodeService {
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名
                 return codeDTO.getXmlPath() + "/mapper/" + pc.getModuleName() + "/"
-                        + tableInfo.getEntityName() + "Mapper" + StringPool.DOT_XML;
+                        + codeDTO.getMapperName() + StringPool.DOT_XML;
             }
         });
 
